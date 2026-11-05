@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FORMA</title>
-  <meta name="description" content="Agents exchange a task and evidence. FORMA blocks one path and accepts another.">
+  <meta name="description" content="Three recorded procurement exchanges: unread prices block, disclosed prices 1 and 1 accept, disclosed prices 90 and 1 block.">
   <style>
     :root {
       color-scheme: dark;
@@ -19,170 +19,60 @@
       --block: #f4a49c;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
     main { max-width: 68rem; margin: 0 auto; padding: 2.6rem 1.2rem 2.4rem; }
-    header p { margin: 0; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.74rem; }
+    header p { margin: 0; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.74rem; }
     h1 { margin: 0.3rem 0 0; font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 560; letter-spacing: -0.045em; }
-    .lede { max-width: 40rem; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
-    .stage {
-      position: relative;
-      margin-top: 1.4rem;
-      height: 22rem;
+    .lede { max-width: 42rem; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
+    .stage { position: relative; min-height: 28rem; margin-top: 1.2rem; }
+    .scene {
       border: 1px solid var(--line);
       border-radius: 22px;
       background: #0e1116;
-      overflow: hidden;
+      padding: 1.1rem 1.1rem 1.2rem;
     }
-    .wire {
-      position: absolute;
-      top: 7.15rem;
-      height: 2px;
-      background: var(--line);
-    }
-    .wire.a { left: 18%; width: 24%; }
-    .wire.b { left: 46%; width: 32%; }
-    .wire.c { left: 34%; top: 11.6rem; width: 12%; transform: rotate(38deg); transform-origin: left center; }
-    .agent {
-      position: absolute;
-      width: 5.4rem;
-      text-align: center;
-    }
+    .agents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; text-align: center; }
     .face {
-      width: 5.4rem;
-      height: 5.4rem;
-      margin: 0 auto;
-      border: 3px solid var(--line);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 38% 42%, var(--muted) 0 4px, transparent 5px),
-        radial-gradient(circle at 62% 42%, var(--muted) 0 4px, transparent 5px),
-        var(--card);
+      width: 4.4rem; height: 4.4rem; margin: 0 auto 0.45rem;
+      border: 3px solid var(--line); border-radius: 50%; background: var(--card); position: relative;
+    }
+    .face::before {
+      content: ""; position: absolute; left: 0.7rem; right: 0.7rem; top: 1.55rem; height: 0.85rem;
+      border-radius: 6px; background: #10141a; border: 2px solid var(--line);
     }
     .face::after {
-      content: "";
-      display: block;
-      width: 1.1rem;
-      height: 2px;
-      margin: 2.55rem auto 0;
-      background: var(--muted);
+      content: ""; position: absolute; left: 1.15rem; right: 1.15rem; bottom: -0.45rem; height: 0.85rem;
+      border-radius: 0 0 14px 14px; background: #222830; border: 2px solid var(--line); border-top: 0;
     }
-    .agent strong { display: block; margin-top: 0.45rem; font-size: 0.95rem; }
-    .agent span { color: var(--muted); font-size: 0.75rem; }
-    .delegate { left: 8%; top: 4.4rem; }
-    .provider { left: 40%; top: 4.4rem; }
-    .verifier { left: 76%; top: 4.4rem; }
-    .issuer { left: 27%; top: 12.4rem; width: 4.2rem; }
-    .issuer .face { width: 3.6rem; height: 3.6rem; }
-    .issuer .face::after { margin-top: 1.7rem; }
-    .packet, .gate {
-      position: absolute;
-      top: 5.55rem;
-      border-radius: 999px;
-      padding: 0.28rem 0.7rem;
-      font-size: 0.78rem;
-      background: #101418;
+    .agents strong { display: block; font-size: 0.95rem; }
+    .agents span { color: var(--muted); font-size: 0.75rem; }
+    .exchange, .verdict {
+      margin-top: 1.3rem; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 0.85rem 1rem;
     }
-    .packet { border: 2px solid var(--accent); color: var(--ink); }
-    .gate {
-      left: 62%;
-      top: 6.35rem;
-      width: 2.3rem;
-      height: 2.3rem;
-      padding: 0;
-      border: 3px solid var(--block);
-      border-radius: 50%;
-      color: var(--block);
-      text-align: center;
-      line-height: 1.9rem;
-      font-size: 1rem;
-      opacity: 0;
-    }
-    .forma {
-      margin-top: 0.8rem;
-      padding: 0.9rem 1rem 1rem;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--panel);
-    }
-    .forma-row, .outcomes { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-    .forma-row { margin-top: 0.7rem; }
-    .outcomes { margin-top: 0.8rem; }
-    .chip, .outcome {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: var(--card);
-      color: var(--muted);
-      padding: 0.45rem 0.75rem;
-    }
-    .caption { min-height: 1.2rem; margin: 0.85rem 0 0; color: var(--muted); font-size: 0.92rem; }
+    .exchange h2 { margin: 0 0 0.55rem; font-size: 1rem; font-weight: 560; }
+    .exchange p { display: grid; grid-template-columns: 8rem 1fr; gap: 0.4rem; margin: 0.28rem 0; font-family: ui-monospace, Menlo, monospace; font-size: 0.86rem; }
+    .exchange p span { color: var(--muted); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .verdict { font-size: 0.92rem; color: var(--muted); }
+    .verdict b { display: block; margin-bottom: 0.2rem; letter-spacing: 0.08em; }
+    .block b { color: var(--block); }
+    .accept b { color: var(--ok); }
+    .foot { margin: 0.7rem 0 0; color: var(--muted); font-size: 0.84rem; }
     nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.1rem; }
     nav a { color: var(--accent); font-size: 0.9rem; }
     @media (prefers-reduced-motion: no-preference) {
-      .packet { animation: travel 12s linear infinite; }
-      .gate { animation: gate 12s linear infinite; }
-      .delegate .face { animation: glow 12s linear infinite; }
-      .provider .face { animation: glow 12s linear infinite; animation-delay: -9s; }
-      .verifier .face { animation: glow 12s linear infinite; animation-delay: -5s; }
-      .issuer .face { animation: glow 12s linear infinite; animation-delay: -8s; }
-      .policy { animation: lit 12s linear infinite; animation-delay: -6.2s; }
-      .use { animation: lit 12s linear infinite; animation-delay: -5.6s; }
-      .evaluation { animation: lit 12s linear infinite; animation-delay: -4.6s; }
-      .check { animation: lit 12s linear infinite; animation-delay: -4s; }
-      .accept { animation: accept 12s linear infinite; }
-      .block { animation: blocked 12s linear infinite; }
-      .caption { animation: words 12s linear infinite; }
+      .scene { position: absolute; inset: 0; opacity: 0; animation: show 18s infinite; }
+      .scene:nth-child(2) { animation-delay: 6s; }
+      .scene:nth-child(3) { animation-delay: 12s; }
+      .on .face { border-color: var(--accent); }
+      .on .face::before { border-color: var(--accent); }
     }
-    @keyframes travel {
-      0% { left: 16%; opacity: 1; }
-      22% { left: 38%; opacity: 1; }
-      28% { left: 44%; opacity: 0; }
-      32% { left: 48%; opacity: 1; }
-      48% { left: 60%; opacity: 1; }
-      62% { left: 58%; opacity: 1; }
-      70% { opacity: 0; }
-      74% { left: 50%; opacity: 1; }
-      88% { left: 72%; opacity: 1; }
-      100% { left: 74%; opacity: 1; }
+    @keyframes show {
+      0%, 28% { opacity: 1; }
+      33%, 100% { opacity: 0; }
     }
-    @keyframes gate {
-      0%, 52% { opacity: 0; }
-      58%, 68% { opacity: 1; }
-      74%, 100% { opacity: 0; }
-    }
-    @keyframes glow {
-      0%, 18% { border-color: var(--accent); box-shadow: 0 0 0 6px rgba(110, 231, 212, 0.12); }
-      28%, 100% { border-color: var(--line); box-shadow: none; }
-    }
-    @keyframes lit {
-      0%, 12% { border-color: var(--accent); color: var(--ink); }
-      40%, 100% { border-color: var(--line); color: var(--muted); }
-    }
-    @keyframes blocked {
-      0%, 54% { border-color: var(--line); color: var(--muted); }
-      60%, 70% { border-color: var(--block); color: var(--block); }
-      76%, 100% { border-color: var(--line); color: var(--muted); }
-    }
-    @keyframes accept {
-      0%, 82% { border-color: var(--line); color: var(--muted); }
-      88%, 100% { border-color: var(--ok); color: var(--ok); }
-    }
-    @keyframes words {
-      0%, 24% { content: "Delegate sends the task to the provider."; }
-    }
-    .caption::before { content: "Delegate sends the task. The provider returns evidence. FORMA blocks one path, then accepts a reassessed copy."; }
     @media (max-width: 720px) {
-      .stage { height: 26rem; }
-      .verifier { left: 70%; }
-      .wire.b { width: 24%; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .accept { border-color: var(--ok); color: var(--ok); }
-      .verifier .face { border-color: var(--accent); }
+      .exchange p { grid-template-columns: 1fr; }
+      .stage { min-height: 36rem; }
     }
   </style>
 </head>
@@ -191,33 +81,57 @@
     <header>
       <p>Replication package</p>
       <h1>FORMA</h1>
-      <p class="lede">Agents pass a task and an evidence item. FORMA reads that exchange, blocks the path when the result does not hold, and accepts it when the result is checkable and holds.</p>
+      <p class="lede">Three recorded exchanges from procurement case fb-pbi-00. The buyer asks whether two supplier prices sum to at most 80. FORMA blocks unread self-assertions, accepts disclosed prices 1 and 1, and blocks disclosed prices 90 and 1.</p>
     </header>
-    <section class="stage" aria-label="Agents exchanging evidence">
-      <div class="wire a"></div>
-      <div class="wire b"></div>
-      <div class="wire c"></div>
-      <div class="agent delegate"><div class="face"></div><strong>Delegate</strong><span>sends the task</span></div>
-      <div class="agent provider"><div class="face"></div><strong>Provider</strong><span>returns evidence</span></div>
-      <div class="agent verifier"><div class="face"></div><strong>Verifier</strong><span>issues the receipt</span></div>
-      <div class="agent issuer"><div class="face"></div><strong>Issuer</strong><span>evidence item</span></div>
-      <div class="packet">message</div>
-      <div class="gate" aria-hidden="true">/</div>
-    </section>
-    <p class="caption"></p>
-    <section class="forma" aria-label="FORMA formation">
-      <strong>FORMA</strong>
-      <div class="forma-row">
-        <span class="chip policy">Policy</span>
-        <span class="chip use">Usability</span>
-        <span class="chip evaluation">Evaluation</span>
-        <span class="chip check">Checkability</span>
-      </div>
-      <div class="outcomes">
-        <span class="outcome accept">Accept</span>
-        <span class="outcome block">Block</span>
-        <span class="outcome">Defer</span>
-      </div>
+    <section class="stage" aria-label="Three recorded exchanges">
+      <article class="scene">
+        <div class="agents">
+          <div><div class="face"></div><strong>Buyer</strong><span>asks the constraint</span></div>
+          <div class="on"><div class="face"></div><strong>Supplier</strong><span>self-asserts both prices</span></div>
+          <div class="on"><div class="face"></div><strong>Auditor</strong><span>cannot use that strength</span></div>
+        </div>
+        <div class="exchange">
+          <h2>Example 1 · prices stay unread</h2>
+          <p><span>Constraint</span> prices sum &lt;= 80</p>
+          <p><span>Budget</span> 80, public</p>
+          <p><span>Prices</span> self-assertion, not an accepted strength</p>
+          <p><span>Evaluation</span> unavailable</p>
+        </div>
+        <div class="verdict block"><b>BLOCK</b> Formation blocks. The prices stay unread, so this is unavailable verification, not an established violation.</div>
+        <p class="foot">fb-pbi-00 · S0 · hold_below · reason strength_insufficient</p>
+      </article>
+      <article class="scene">
+        <div class="agents">
+          <div><div class="face"></div><strong>Buyer</strong><span>same constraint</span></div>
+          <div class="on"><div class="face"></div><strong>Supplier</strong><span>reveals 1 and 1</span></div>
+          <div class="on"><div class="face"></div><strong>Auditor</strong><span>reads the copy</span></div>
+        </div>
+        <div class="exchange">
+          <h2>Example 2 · disclosed prices hold</h2>
+          <p><span>Disclosure</span> price 1, second price 1, both revealed</p>
+          <p><span>Sum</span> 2 &lt;= 80</p>
+          <p><span>Evaluation</span> holds</p>
+          <p><span>Label</span> checkable, not public</p>
+        </div>
+        <div class="verdict accept"><b>ACCEPT</b> The auditor issues the receipt. Accept is not an approval event.</div>
+        <p class="foot">fb-pbi-00 · selective disclosure · hold_below · evidence_sufficient</p>
+      </article>
+      <article class="scene">
+        <div class="agents">
+          <div><div class="face"></div><strong>Buyer</strong><span>same constraint</span></div>
+          <div class="on"><div class="face"></div><strong>Supplier</strong><span>reveals 90 and 1</span></div>
+          <div class="on"><div class="face"></div><strong>Auditor</strong><span>the sum is over 80</span></div>
+        </div>
+        <div class="exchange">
+          <h2>Example 3 · the same disclosure violates</h2>
+          <p><span>Disclosure</span> price 90, second price 1, both revealed</p>
+          <p><span>Sum</span> 91 &lt;= 80 is false</p>
+          <p><span>Evaluation</span> violated</p>
+          <p><span>Formation</span> block</p>
+        </div>
+        <div class="verdict block"><b>BLOCK</b> This block is an established violation. Disclosure does not force accept.</div>
+        <p class="foot">fb-pbi-00 · selective disclosure · violate_single on the counterparty price</p>
+      </article>
     </section>
     <nav>
       <a href="https://github.com/ResearchAnonymized/FORMA/blob/main/BENCHMARK.md">Use FORMA-Bench</a>

@@ -2,9 +2,9 @@
 
 Architectural verifiability for agent-to-agent systems.
 
-![Four agent icons. The delegate sends a task to the provider, the provider returns evidence toward the verifier, FORMA blocks that path, then a transformed copy is accepted and the verifier receives a receipt.](docs/forma-exchange.gif)
+![Buyer, supplier, and procurement auditor. Three recorded exchanges on case fb-pbi-00: self-asserted prices stay unread and formation blocks; disclosed prices 1 and 1 sum to 2 and formation accepts; disclosed prices 90 and 1 sum to 91 and formation blocks.](docs/forma-exchange.gif)
 
-The delegate sends a task. The provider returns evidence from an issuer. FORMA checks policy, usability, evaluation, and checkability. The formation policy blocks the path unless the result is checkable and holds. A tactic sends a transformed copy through the same classifier, and the verifier issues a receipt when that copy is accepted.
+Three recorded exchanges from procurement case `fb-pbi-00`. The buyer asks whether the supplier prices sum to at most 80. Self-asserted prices are not an accepted strength, so FORMA leaves them unread and blocks. Selective disclosure then reveals the stored prices. On `hold_below` those prices are 1 and 1, the sum holds, and formation accepts. On the world where one price is 90, the sum is 91, the comparison is violated, and formation blocks. The same disclosure does not force accept.
 
 The same sequence plays on the [welcome page](https://researchanonymized.github.io/FORMA/). This repository holds the implementation, FORMA-Bench, and the retained evaluation records.
 
