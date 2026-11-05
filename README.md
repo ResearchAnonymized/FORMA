@@ -2,7 +2,11 @@
 
 Architectural verifiability for agent-to-agent systems.
 
-This repository is the replication package: the implementation, FORMA-Bench, and the retained evaluation records. The short welcome page is [`docs/index.html`](docs/index.html).
+![The delegate sends a request, the provider returns an offer, the attestor sends a claim, and FORMA admits the evidence before returning a formation receipt.](docs/forma-exchange.gif)
+
+A delegate requests an offer from a provider. An attestor binds a claim. FORMA admits only that evidence, assigns a label, compares the evaluation, and returns the formation receipt. The model may choose the next action. It does not decide formation.
+
+The same sequence plays on the [welcome page](https://researchanonymized.github.io/FORMA/). This repository holds the implementation, FORMA-Bench, and the retained evaluation records.
 
 ## Run the checks
 
