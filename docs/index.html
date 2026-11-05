@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FORMA</title>
-  <meta name="description" content="Three recorded procurement exchanges: unread prices block, disclosed prices 1 and 1 accept, disclosed prices 90 and 1 block.">
+  <meta name="description" content="A message card moves from the requester to the producer, then to the consumer, and the decision moves back.">
   <style>
     :root {
       color-scheme: dark;
@@ -23,56 +23,79 @@
     main { max-width: 68rem; margin: 0 auto; padding: 2.6rem 1.2rem 2.4rem; }
     header p { margin: 0; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.74rem; }
     h1 { margin: 0.3rem 0 0; font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 560; letter-spacing: -0.045em; }
-    .lede { max-width: 42rem; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
-    .stage { position: relative; min-height: 28rem; margin-top: 1.2rem; }
-    .scene {
+    .lede { max-width: 44rem; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
+    .stage {
+      position: relative;
+      height: 28rem;
+      margin-top: 1.2rem;
       border: 1px solid var(--line);
       border-radius: 22px;
       background: #0e1116;
-      padding: 1.1rem 1.1rem 1.2rem;
+      overflow: hidden;
     }
-    .agents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; text-align: center; }
+    .agents { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; padding-top: 1.4rem; }
     .face {
-      width: 4.4rem; height: 4.4rem; margin: 0 auto 0.45rem;
-      border: 3px solid var(--line); border-radius: 50%; background: var(--card); position: relative;
+      width: 4.2rem; height: 4.2rem; margin: 0 auto 0.4rem; border-radius: 50%;
+      border: 3px solid var(--line); background: var(--card); position: relative;
     }
     .face::before {
-      content: ""; position: absolute; left: 0.7rem; right: 0.7rem; top: 1.55rem; height: 0.85rem;
+      content: ""; position: absolute; left: 0.7rem; right: 0.7rem; top: 1.45rem; height: 0.8rem;
       border-radius: 6px; background: #10141a; border: 2px solid var(--line);
     }
-    .face::after {
-      content: ""; position: absolute; left: 1.15rem; right: 1.15rem; bottom: -0.45rem; height: 0.85rem;
-      border-radius: 0 0 14px 14px; background: #222830; border: 2px solid var(--line); border-top: 0;
+    .agents strong { display: block; }
+    .agents span { color: var(--accent); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .rail { position: absolute; left: 16%; right: 16%; top: 11.2rem; height: 3px; background: var(--line); }
+    .cargo {
+      position: absolute; top: 12.4rem; width: 16.5rem; padding: 0.75rem 0.85rem 0.85rem;
+      border: 2px solid var(--accent); border-radius: 14px; background: var(--panel); opacity: 0;
     }
-    .agents strong { display: block; font-size: 0.95rem; }
-    .agents span { color: var(--muted); font-size: 0.75rem; }
-    .exchange, .verdict {
-      margin-top: 1.3rem; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 0.85rem 1rem;
-    }
-    .exchange h2 { margin: 0 0 0.55rem; font-size: 1rem; font-weight: 560; }
-    .exchange p { display: grid; grid-template-columns: 8rem 1fr; gap: 0.4rem; margin: 0.28rem 0; font-family: ui-monospace, Menlo, monospace; font-size: 0.86rem; }
-    .exchange p span { color: var(--muted); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-    .verdict { font-size: 0.92rem; color: var(--muted); }
-    .verdict b { display: block; margin-bottom: 0.2rem; letter-spacing: 0.08em; }
-    .block b { color: var(--block); }
-    .accept b { color: var(--ok); }
-    .foot { margin: 0.7rem 0 0; color: var(--muted); font-size: 0.84rem; }
+    .cargo b { display: block; margin-bottom: 0.35rem; }
+    .cargo p { margin: 0.15rem 0; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 0.78rem; }
+    .cargo i { float: right; font-style: normal; letter-spacing: 0.06em; }
+    .block { border-color: var(--block); }
+    .block i { color: var(--block); }
+    .accept { border-color: var(--ok); }
+    .accept i { color: var(--ok); }
     nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.1rem; }
     nav a { color: var(--accent); font-size: 0.9rem; }
     @media (prefers-reduced-motion: no-preference) {
-      .scene { position: absolute; inset: 0; opacity: 0; animation: show 18s infinite; }
-      .scene:nth-child(2) { animation-delay: 6s; }
-      .scene:nth-child(3) { animation-delay: 12s; }
-      .on .face { border-color: var(--accent); }
-      .on .face::before { border-color: var(--accent); }
+      .ask { animation: ask 32s linear infinite; }
+      .unread { animation: unread 32s linear infinite; }
+      .held { animation: held 32s linear infinite; }
+      .over { animation: over 32s linear infinite; }
     }
-    @keyframes show {
-      0%, 28% { opacity: 1; }
-      33%, 100% { opacity: 0; }
+    @keyframes ask {
+      0% { left: 8%; opacity: 1; }
+      12% { left: 36%; opacity: 1; }
+      16%, 100% { opacity: 0; }
+    }
+    @keyframes unread {
+      0%, 16% { opacity: 0; }
+      18% { left: 36%; opacity: 1; }
+      32% { left: 64%; opacity: 1; }
+      40% { left: 64%; opacity: 1; }
+      50% { left: 8%; opacity: 1; }
+      54%, 100% { opacity: 0; }
+    }
+    @keyframes held {
+      0%, 54% { opacity: 0; }
+      56% { left: 36%; opacity: 1; }
+      70% { left: 64%; opacity: 1; }
+      78% { left: 8%; opacity: 1; }
+      82%, 100% { opacity: 0; }
+    }
+    @keyframes over {
+      0%, 82% { opacity: 0; }
+      84% { left: 36%; opacity: 1; }
+      94% { left: 64%; opacity: 1; }
+      100% { left: 40%; opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .held { left: 58%; opacity: 1; }
     }
     @media (max-width: 720px) {
-      .exchange p { grid-template-columns: 1fr; }
-      .stage { min-height: 36rem; }
+      .stage { height: 32rem; }
+      .cargo { width: 13rem; }
     }
   </style>
 </head>
@@ -81,56 +104,35 @@
     <header>
       <p>Replication package</p>
       <h1>FORMA</h1>
-      <p class="lede">Three recorded exchanges from procurement case fb-pbi-00. The buyer asks whether two supplier prices sum to at most 80. FORMA blocks unread self-assertions, accepts disclosed prices 1 and 1, and blocks disclosed prices 90 and 1.</p>
+      <p class="lede">The message is a card. The requester sends the constraint to the producer. The producer sends the prices to the consumer. FORMA stamps that card, and the consumer sends the decision back.</p>
     </header>
-    <section class="stage" aria-label="Three recorded exchanges">
-      <article class="scene">
-        <div class="agents">
-          <div><div class="face"></div><strong>Buyer</strong><span>asks the constraint</span></div>
-          <div class="on"><div class="face"></div><strong>Supplier</strong><span>self-asserts both prices</span></div>
-          <div class="on"><div class="face"></div><strong>Auditor</strong><span>cannot use that strength</span></div>
-        </div>
-        <div class="exchange">
-          <h2>Example 1 · prices stay unread</h2>
-          <p><span>Constraint</span> prices sum &lt;= 80</p>
-          <p><span>Budget</span> 80, public</p>
-          <p><span>Prices</span> self-assertion, not an accepted strength</p>
-          <p><span>Evaluation</span> unavailable</p>
-        </div>
-        <div class="verdict block"><b>BLOCK</b> Formation blocks. The prices stay unread, so this is unavailable verification, not an established violation.</div>
-        <p class="foot">fb-pbi-00 · S0 · hold_below · reason strength_insufficient</p>
+    <section class="stage" aria-label="Message card moving between agents">
+      <div class="agents">
+        <div><div class="face"></div><strong>Buyer</strong><span>Requester</span></div>
+        <div><div class="face"></div><strong>Supplier</strong><span>Producer</span></div>
+        <div><div class="face"></div><strong>Auditor</strong><span>Consumer</span></div>
+      </div>
+      <div class="rail"></div>
+      <article class="cargo ask">
+        <b>Requester asks</b>
+        <p>prices sum &lt;= 80</p>
+        <p>budget 80, public</p>
       </article>
-      <article class="scene">
-        <div class="agents">
-          <div><div class="face"></div><strong>Buyer</strong><span>same constraint</span></div>
-          <div class="on"><div class="face"></div><strong>Supplier</strong><span>reveals 1 and 1</span></div>
-          <div class="on"><div class="face"></div><strong>Auditor</strong><span>reads the copy</span></div>
-        </div>
-        <div class="exchange">
-          <h2>Example 2 · disclosed prices hold</h2>
-          <p><span>Disclosure</span> price 1, second price 1, both revealed</p>
-          <p><span>Sum</span> 2 &lt;= 80</p>
-          <p><span>Evaluation</span> holds</p>
-          <p><span>Label</span> checkable, not public</p>
-        </div>
-        <div class="verdict accept"><b>ACCEPT</b> The auditor issues the receipt. Accept is not an approval event.</div>
-        <p class="foot">fb-pbi-00 · selective disclosure · hold_below · evidence_sufficient</p>
+      <article class="cargo unread block">
+        <b>Producer sends <i>BLOCK</i></b>
+        <p>both prices self-asserted</p>
+        <p>strength not accepted</p>
+        <p>values unread</p>
       </article>
-      <article class="scene">
-        <div class="agents">
-          <div><div class="face"></div><strong>Buyer</strong><span>same constraint</span></div>
-          <div class="on"><div class="face"></div><strong>Supplier</strong><span>reveals 90 and 1</span></div>
-          <div class="on"><div class="face"></div><strong>Auditor</strong><span>the sum is over 80</span></div>
-        </div>
-        <div class="exchange">
-          <h2>Example 3 · the same disclosure violates</h2>
-          <p><span>Disclosure</span> price 90, second price 1, both revealed</p>
-          <p><span>Sum</span> 91 &lt;= 80 is false</p>
-          <p><span>Evaluation</span> violated</p>
-          <p><span>Formation</span> block</p>
-        </div>
-        <div class="verdict block"><b>BLOCK</b> This block is an established violation. Disclosure does not force accept.</div>
-        <p class="foot">fb-pbi-00 · selective disclosure · violate_single on the counterparty price</p>
+      <article class="cargo held accept">
+        <b>Producer discloses <i>ACCEPT</i></b>
+        <p>price 1, second price 1</p>
+        <p>2 &lt;= 80, holds</p>
+      </article>
+      <article class="cargo over block">
+        <b>Producer discloses <i>BLOCK</i></b>
+        <p>price 90, second price 1</p>
+        <p>91 &lt;= 80 is false</p>
       </article>
     </section>
     <nav>

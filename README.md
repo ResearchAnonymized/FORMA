@@ -2,9 +2,9 @@
 
 Architectural verifiability for agent-to-agent systems.
 
-![Buyer, supplier, and procurement auditor. Three recorded exchanges on case fb-pbi-00: self-asserted prices stay unread and formation blocks; disclosed prices 1 and 1 sum to 2 and formation accepts; disclosed prices 90 and 1 sum to 91 and formation blocks.](docs/forma-exchange.gif)
+![A message card travels from the buyer to the supplier, then to the auditor. The supplier is the producer and the auditor is the consumer. The card carries the constraint, then the prices, and returns stamped BLOCK or ACCEPT.](docs/forma-exchange.gif)
 
-Three recorded exchanges from procurement case `fb-pbi-00`. The buyer asks whether the supplier prices sum to at most 80. Self-asserted prices are not an accepted strength, so FORMA leaves them unread and blocks. Selective disclosure then reveals the stored prices. On `hold_below` those prices are 1 and 1, the sum holds, and formation accepts. On the world where one price is 90, the sum is 91, the comparison is violated, and formation blocks. The same disclosure does not force accept.
+The message is one card, and it moves. The buyer is the requester, the supplier is the producer, and the auditor is the consumer. On procurement case `fb-pbi-00` the card carries the constraint, sum of prices at most 80, from the requester to the producer. The producer then sends the prices to the consumer. Self-asserted prices are not an accepted strength, so FORMA leaves them unread and the card returns stamped block. After selective disclosure the stored prices are 1 and 1, the sum holds, and the card returns stamped accept. On the world where one price is 90, the sum is 91, the comparison is violated, and the card returns stamped block.
 
 The same sequence plays on the [welcome page](https://researchanonymized.github.io/FORMA/). This repository holds the implementation, FORMA-Bench, and the retained evaluation records.
 
