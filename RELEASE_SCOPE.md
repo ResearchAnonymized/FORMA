@@ -33,7 +33,10 @@ This file is the inclusion list for the ICSA replication package. The developmen
 | `docs/RQ1_CORRECTION.md` | What the corrected F1 and F2 rerun changed |
 | `docs/FORMA_BENCH_DATASET_CARD_v0.1.md` | Dataset card |
 | `research/CORE_SPEC_v0.2.md` and the two amendments | Verification contract |
-| `research/FORMA_BENCH_PROTOCOL_v0.1.md`, tactic and condition protocols, held-out protocol, evaluation cases | Protocols for the controlled evaluation |
+| `research/FORMA_BENCH_PROTOCOL_v0.1.md`, `research/FORMA_BENCH_CASE_CATALOGUE_v0.1.md`, `research/FORMA_BENCH_SEMANTIC_AND_DIVERSITY_AUDIT_v0.1.md` | Benchmark protocol, anchor catalogue, and audit |
+| `BENCHMARK.md`, `scripts/forma_bench.py` | How to check and rerun FORMA-Bench into `runs/` |
+| `docs/index.html` | Welcome page |
+| Tactic, condition, held-out, and evaluation protocols under `research/` | Protocols for the controlled evaluation |
 | `research/LIVE_A2A_*.md` | Live execution, multimodel, portability, and rerun settings |
 | `pyproject.toml` | Package metadata and pytest path |
 
