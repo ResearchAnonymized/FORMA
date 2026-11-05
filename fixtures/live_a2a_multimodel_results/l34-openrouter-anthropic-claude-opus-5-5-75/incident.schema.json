@@ -1,0 +1,1 @@
+{"append_only":true,"artifact":"infrastructure_incidents","automatic_retry":false,"campaign_id":"l34-openrouter-anthropic-claude-opus-5-5-75","entered_reliability_denominator":false,"events_stored":0,"resume_rule":"A later resume creates a new attempt record linked to the same planned session and does not overwrite the incident.","session_status_after_incident":"planned"}

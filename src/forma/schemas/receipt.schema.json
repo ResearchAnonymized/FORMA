@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/receipt.schema.json",
+  "title": "Formation receipt",
+  "description": "Shape reserved for a later phase. fixture_level_guarantee_relation is an assessment of the declared fixture and tactic rules, not a general entailment proof.",
+  "type": "object",
+  "required": ["receipt_id", "tactic_id", "fixture_level_guarantee_relation"],
+  "properties": {
+    "fixture_level_guarantee_relation": {
+      "enum": [
+        "preserves_original_guarantee",
+        "strengthens_original_guarantee",
+        "restricts_solution_space_but_preserves_guarantee",
+        "weakens_original_guarantee",
+        "substitutes_guarantee_requires_architect_approval"
+      ]
+    }
+  }
+}

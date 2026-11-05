@@ -1,0 +1,1 @@
+{"append_only":true,"artifact":"resource_guard_ledger","campaign_id":"l34a-openrouter-anthropic-claude-haiku-5-5-75","events_stored":0,"required_fields":["campaign_id","recorded_at","cumulative_actual_spend_usd","campaign_cap_usd","batch_cap_usd","safety_reserve_usd","remaining_budget_usd","decision","reason","scope"]}

@@ -1,0 +1,108 @@
+{
+  "scenario_id": "residency-private-policy",
+  "plan": {
+    "plan_id": "plan-residency-private",
+    "task_id": "task-residency-private",
+    "task_statement": "Send detailed requirements only to a supplier that processes data in the EU.",
+    "award_policy": "exactly_one",
+    "owners": [
+      {"owner_id": "org-buyer", "name": "Buyer Organisation", "kind": "organisation"},
+      {"owner_id": "org-supplier-a", "name": "Supplier A Organisation", "kind": "organisation"},
+      {"owner_id": "org-supplier-b", "name": "Supplier B Organisation", "kind": "organisation"},
+      {"owner_id": "org-facilitator", "name": "Formation Facilitator", "kind": "organisation"}
+    ],
+    "agents": [
+      {"agent_id": "agent-buyer", "name": "Buyer", "owner_id": "org-buyer"},
+      {"agent_id": "agent-supplier-a", "name": "Supplier A", "owner_id": "org-supplier-a"},
+      {"agent_id": "agent-supplier-b", "name": "Supplier B", "owner_id": "org-supplier-b"},
+      {"agent_id": "agent-facilitator", "name": "Facilitator", "owner_id": "org-facilitator"}
+    ],
+    "roles": [
+      {"role_id": "buyer", "agent_ids": ["agent-buyer"]},
+      {"role_id": "candidate_supplier", "agent_ids": ["agent-supplier-a", "agent-supplier-b"]},
+      {"role_id": "facilitator", "agent_ids": ["agent-facilitator"]}
+    ],
+    "connectors": [
+      {"connector_id": "con-detail-a", "from_agent_id": "agent-buyer", "to_agent_id": "agent-supplier-a", "interaction_type": "requirements.detailed"},
+      {"connector_id": "con-detail-b", "from_agent_id": "agent-buyer", "to_agent_id": "agent-supplier-b", "interaction_type": "requirements.detailed"}
+    ],
+    "delegations": [],
+    "data_flows": [
+      {"flow_id": "df-detail-a", "connector_id": "con-detail-a", "data_class": "requirements.detailed", "attribute_ids": []},
+      {"flow_id": "df-detail-b", "connector_id": "con-detail-b", "data_class": "requirements.detailed", "attribute_ids": []}
+    ],
+    "evidence_flows": [],
+    "recovery": [],
+    "attributes": [
+      {
+        "attribute_id": "attr-a-region",
+        "name": "processing_region",
+        "subject": {"kind": "agent", "id": "agent-supplier-a"},
+        "value": "US",
+        "owner_id": "org-supplier-a",
+        "visibility": "private",
+        "disclosure": {"audience": "none"},
+        "evidence": {"form": "raw_value", "strength": "self_assertion"}
+      },
+      {
+        "attribute_id": "attr-a-transfer",
+        "name": "transfers_outside_eea",
+        "subject": {"kind": "agent", "id": "agent-supplier-a"},
+        "value": true,
+        "owner_id": "org-supplier-a",
+        "visibility": "private",
+        "disclosure": {"audience": "none"},
+        "evidence": {"form": "raw_value", "strength": "self_assertion"}
+      },
+      {
+        "attribute_id": "attr-b-region",
+        "name": "processing_region",
+        "subject": {"kind": "agent", "id": "agent-supplier-b"},
+        "value": "EU",
+        "owner_id": "org-supplier-b",
+        "visibility": "private",
+        "disclosure": {"audience": "none"},
+        "evidence": {"form": "raw_value", "strength": "self_assertion"}
+      },
+      {
+        "attribute_id": "attr-b-transfer",
+        "name": "transfers_outside_eea",
+        "subject": {"kind": "agent", "id": "agent-supplier-b"},
+        "value": false,
+        "owner_id": "org-supplier-b",
+        "visibility": "private",
+        "disclosure": {"audience": "none"},
+        "evidence": {"form": "raw_value", "strength": "self_assertion"}
+      }
+    ]
+  },
+  "invariant": {
+    "invariant_id": "inv-residency",
+    "logical_form": "conjunction",
+    "statement": "Each candidate supplier processes data in the EU and does not transfer it outside the EEA.",
+    "accepted_strengths": ["public_certification"],
+    "depends_on": ["attr-a-region", "attr-a-transfer", "attr-b-region", "attr-b-transfer"],
+    "formula": {
+      "conjunction": {
+        "atoms": [
+          {"atom_id": "a-region", "owner_id": "org-supplier-a", "attribute_id": "attr-a-region", "op": "eq", "expected": "EU"},
+          {"atom_id": "a-transfer", "owner_id": "org-supplier-a", "attribute_id": "attr-a-transfer", "op": "eq", "expected": false},
+          {"atom_id": "b-region", "owner_id": "org-supplier-b", "attribute_id": "attr-b-region", "op": "eq", "expected": "EU"},
+          {"atom_id": "b-transfer", "owner_id": "org-supplier-b", "attribute_id": "attr-b-transfer", "op": "eq", "expected": false}
+        ]
+      }
+    },
+    "c3pro": {
+      "c3pro_handled": "false",
+      "reason": "Residency and transfer flags are data predicates, not eCRG activity occurrences.",
+      "expressible_in_rule_formalism": false,
+      "decomposable_under_published_algorithm": false
+    }
+  },
+  "disclosure_policy": {
+    "policy_id": "policy-facilitator",
+    "checker_id": "agent-facilitator",
+    "checker_role": "facilitator",
+    "stage": "single"
+  }
+}

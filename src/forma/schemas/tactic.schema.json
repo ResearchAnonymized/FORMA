@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/tactic.schema.json",
+  "title": "Tactic instance",
+  "description": "Catalogue shape reserved for a later phase. Phase A does not apply tactics.",
+  "type": "object",
+  "required": ["tactic_id", "name", "precondition", "source_verification_structure", "parameters", "costs"],
+  "properties": {
+    "tactic_id": {
+      "enum": [
+        "supplier-prequalification",
+        "espd-deferred-evidence",
+        "trusted-attestor",
+        "budget-supplier-cap",
+        "accountable-coordinator",
+        "certified-public-attribute"
+      ]
+    },
+    "source_verification_structure": {"enum": ["public_check", "per_owner_decomposition", "aggregate_combination", "relational_path"]}
+  }
+}

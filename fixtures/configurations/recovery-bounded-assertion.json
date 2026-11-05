@@ -1,0 +1,258 @@
+{
+  "audience": "named_partner",
+  "case_id": "recovery-bounded-assertion",
+  "configuration": "bounded-owner-assertion-allowed",
+  "disclosure_policy": {
+    "checker_id": "agent-buyer",
+    "checker_role": "participant",
+    "policy_id": "policy-buyer",
+    "stage": "single"
+  },
+  "evidence_form": "owner_asserted_predicate",
+  "evidence_strength": "self_assertion",
+  "evidence_type": "owner_asserted_predicate",
+  "invariant": {
+    "accepted_strengths": [
+      "revealed_value",
+      "third_party_attestation",
+      "public_certification",
+      "self_assertion"
+    ],
+    "c3pro": {
+      "c3pro_handled": "unclear",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "As written, the formula talks about private obligation attributes, which eCRG nodes do not denote."
+    },
+    "depends_on": [
+      "attr-rec-broker",
+      "attr-rec-supplier-b"
+    ],
+    "formula": {
+      "relational_path": {
+        "delegation_responsibility": "order_authority",
+        "quantifier": "all",
+        "recovery_kind": "cancellation",
+        "recovery_must_reach_agent_id": "agent-buyer",
+        "requires_nonempty_path": true,
+        "start_agent_id": "agent-buyer"
+      }
+    },
+    "invariant_id": "inv-e2e-recovery",
+    "logical_form": "relational_path",
+    "statement": "Every order-authority delegate of the buyer has a cancellation path whose evidence reaches the buyer."
+  },
+  "original_invariant": {
+    "accepted_strengths": [
+      "revealed_value",
+      "third_party_attestation",
+      "public_certification",
+      "self_assertion"
+    ],
+    "c3pro": {
+      "c3pro_handled": "unclear",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "As written, the formula talks about private obligation attributes, which eCRG nodes do not denote."
+    },
+    "depends_on": [
+      "attr-rec-broker",
+      "attr-rec-supplier-b"
+    ],
+    "formula": {
+      "relational_path": {
+        "delegation_responsibility": "order_authority",
+        "quantifier": "all",
+        "recovery_kind": "cancellation",
+        "recovery_must_reach_agent_id": "agent-buyer",
+        "requires_nonempty_path": true,
+        "start_agent_id": "agent-buyer"
+      }
+    },
+    "invariant_id": "inv-e2e-recovery",
+    "logical_form": "relational_path",
+    "statement": "Every order-authority delegate of the buyer has a cancellation path whose evidence reaches the buyer."
+  },
+  "plan": {
+    "agents": [
+      {
+        "agent_id": "agent-buyer",
+        "name": "Buyer",
+        "owner_id": "org-buyer"
+      },
+      {
+        "agent_id": "agent-broker",
+        "name": "Broker",
+        "owner_id": "org-broker"
+      },
+      {
+        "agent_id": "agent-supplier-b",
+        "name": "Supplier B",
+        "owner_id": "org-supplier-b"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "attr-rec-broker",
+        "disclosure": {
+          "audience": "named_partner",
+          "partner_ids": [
+            "agent-buyer"
+          ]
+        },
+        "evidence": {
+          "derived_from": [],
+          "form": "owner_asserted_predicate",
+          "predicate": {
+            "expected": true,
+            "op": "eq"
+          },
+          "strength": "self_assertion"
+        },
+        "name": "cancellation_obligation",
+        "owner_id": "org-broker",
+        "subject": {
+          "id": "rec-broker",
+          "kind": "recovery"
+        },
+        "value": true,
+        "visibility": "restricted"
+      },
+      {
+        "attribute_id": "attr-rec-supplier-b",
+        "disclosure": {
+          "audience": "named_partner",
+          "partner_ids": [
+            "agent-buyer"
+          ]
+        },
+        "evidence": {
+          "derived_from": [],
+          "form": "owner_asserted_predicate",
+          "predicate": {
+            "expected": true,
+            "op": "eq"
+          },
+          "strength": "self_assertion"
+        },
+        "name": "cancellation_obligation",
+        "owner_id": "org-supplier-b",
+        "subject": {
+          "id": "rec-supplier-b",
+          "kind": "recovery"
+        },
+        "value": true,
+        "visibility": "restricted"
+      }
+    ],
+    "award_policy": "exactly_one",
+    "connectors": [
+      {
+        "connector_id": "con-order",
+        "from_agent_id": "agent-broker",
+        "interaction_type": "purchase_order",
+        "to_agent_id": "agent-supplier-b"
+      }
+    ],
+    "data_flows": [],
+    "delegations": [
+      {
+        "delegate_agent_id": "agent-broker",
+        "delegation_id": "del-buyer-broker",
+        "principal_agent_id": "agent-buyer",
+        "responsibility": "order_authority",
+        "revocable": true
+      },
+      {
+        "delegate_agent_id": "agent-supplier-b",
+        "delegation_id": "del-broker-supplier",
+        "principal_agent_id": "agent-broker",
+        "responsibility": "supply",
+        "revocable": true
+      }
+    ],
+    "evidence_flows": [
+      {
+        "attribute_id": "attr-rec-broker",
+        "audience": "named_partner",
+        "flow_id": "ef-attr-rec-broker",
+        "form": "owner_asserted_predicate",
+        "from_agent_id": "agent-broker",
+        "strength": "self_assertion",
+        "to_agent_id": "agent-buyer"
+      },
+      {
+        "attribute_id": "attr-rec-supplier-b",
+        "audience": "named_partner",
+        "flow_id": "ef-attr-rec-supplier-b",
+        "form": "owner_asserted_predicate",
+        "from_agent_id": "agent-supplier-b",
+        "strength": "self_assertion",
+        "to_agent_id": "agent-buyer"
+      }
+    ],
+    "owners": [
+      {
+        "kind": "organisation",
+        "name": "Buyer Organisation",
+        "owner_id": "org-buyer"
+      },
+      {
+        "kind": "organisation",
+        "name": "Broker Organisation",
+        "owner_id": "org-broker"
+      },
+      {
+        "kind": "organisation",
+        "name": "Supplier B Organisation",
+        "owner_id": "org-supplier-b"
+      }
+    ],
+    "plan_id": "plan-e2e-recovery",
+    "recovery": [
+      {
+        "beneficiary_agent_id": "agent-buyer",
+        "covers": "delegated_order",
+        "evidence_attribute_id": "attr-rec-broker",
+        "kind": "cancellation",
+        "obligor_agent_id": "agent-broker",
+        "recovery_id": "rec-broker"
+      },
+      {
+        "beneficiary_agent_id": "agent-broker",
+        "covers": "purchase_order",
+        "evidence_attribute_id": "attr-rec-supplier-b",
+        "kind": "cancellation",
+        "obligor_agent_id": "agent-supplier-b",
+        "recovery_id": "rec-supplier-b"
+      }
+    ],
+    "roles": [
+      {
+        "agent_ids": [
+          "agent-buyer"
+        ],
+        "role_id": "buyer"
+      },
+      {
+        "agent_ids": [
+          "agent-broker"
+        ],
+        "role_id": "broker"
+      },
+      {
+        "agent_ids": [
+          "agent-supplier-b"
+        ],
+        "role_id": "candidate_supplier"
+      }
+    ],
+    "task_id": "task-e2e-recovery",
+    "task_statement": "The buyer remains able to obtain cancellation of a delegated sensor order."
+  },
+  "plan_variant": "buyer-broker-supplier",
+  "prospective_c3pro_comparison_case": false,
+  "scenario_id": "e2e-recovery",
+  "stage": "single",
+  "trust_assumption": "Each obligor asserts its own cancellation boolean to the buyer. This configuration adds self_assertion to the accepted strengths."
+}

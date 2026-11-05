@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/classification.schema.json",
+  "title": "Classification",
+  "type": "object",
+  "required": ["invariant_id", "logical_form", "verification_structure", "feasibility", "evaluation", "classification_label", "required_evidence", "reason", "evidence_strength"],
+  "properties": {
+    "classification_label": {
+      "description": "Whether the permitted evidence view can decide the invariant. A checkable label does not mean the invariant holds.",
+      "enum": ["checkable_public", "checkable_by_bounded_assertion", "checkable_with_escalation", "evidence_distributed", "not_checkable"]
+    },
+    "verification_structure": {"enum": ["public_check", "per_owner_decomposition", "aggregate_combination", "relational_path"]},
+    "original_verification_structure": {"enum": ["public_check", "per_owner_decomposition", "aggregate_combination", "relational_path"]},
+    "candidate_substitute_used": {"type": "boolean"},
+    "post_tactic_checked_predicate": {},
+    "blocker_reasons": {"type": "array", "items": {"type": "string"}},
+    "feasibility": {"enum": ["feasible", "infeasible"]},
+    "evaluation": {"enum": ["holds", "violated", null]},
+    "reason": {
+      "type": "object",
+      "required": ["code", "detail"],
+      "properties": {
+        "code": {"enum": ["evidence_sufficient", "values_hidden", "evidence_distributed", "strength_insufficient", "audience_mismatch", "path_missing", "attribute_missing", "owner_assertions_incomplete"]}
+      }
+    }
+  }
+}

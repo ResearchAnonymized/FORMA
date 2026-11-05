@@ -1,0 +1,83 @@
+{
+  "pareto_rule": null,
+  "written_before_condition_run": true,
+  "rows": [
+    {
+      "scenario": "budget",
+      "case_id": "budget-private",
+      "original_invariant": "The sum of all selected supplier prices is less than or equal to the total task budget.",
+      "approved_tactic": "trusted_aggregate_attestor",
+      "parameters": null,
+      "expected_relation": "preserves_original_guarantee",
+      "approval_rationale": "The attestor receives supplier prices and returns only the aggregate comparison. That adds a trusted principal, a disclosure audience, and architectural messages. The checked predicate preserves the sum on the declared worlds.",
+      "expected_checkability_gain": true,
+      "counts_as_success": true
+    },
+    {
+      "scenario": "budget",
+      "case_id": "budget-private",
+      "original_invariant": "The sum of all selected supplier prices is less than or equal to the total task budget.",
+      "approved_tactic": "supplier_budget_caps",
+      "parameters": null,
+      "expected_relation": "restricts_solution_space_but_preserves_guarantee",
+      "approval_rationale": "Equal caps of 10000 and 10000 add supplier assertions and exclude some sums that still fit the budget. False accepts stay zero, and the architect approves the restricted solution space.",
+      "expected_checkability_gain": true,
+      "counts_as_success": true
+    },
+    {
+      "scenario": "budget",
+      "case_id": "budget-private",
+      "original_invariant": "The sum of all selected supplier prices is less than or equal to the total task budget.",
+      "approved_tactic": "framework_agreement_pricing",
+      "parameters": null,
+      "expected_relation": "preserves_original_guarantee",
+      "approval_rationale": "Prices become public certificates and eligibility becomes framework qualification. The fixed selected-supplier worlds do not measure that candidate restriction. The architect approves the disclosure and the eligibility rule.",
+      "expected_checkability_gain": true,
+      "counts_as_success": true
+    },
+    {
+      "scenario": "residency",
+      "case_id": "residency-private",
+      "original_invariant": "Each candidate supplier processes data in the EU and does not transfer it outside the EEA.",
+      "approved_tactic": "third_party_residency_attestation",
+      "parameters": null,
+      "expected_relation": "preserves_original_guarantee",
+      "approval_rationale": "An independent attestor sees the raw flags and returns compliance assertions. Preservation is under the honest-attestor fill, and the escalation requires approval.",
+      "expected_checkability_gain": true,
+      "counts_as_success": true
+    },
+    {
+      "scenario": "residency",
+      "case_id": "residency-private",
+      "original_invariant": "Each candidate supplier processes data in the EU and does not transfer it outside the EEA.",
+      "approved_tactic": "certified_public_profile",
+      "parameters": null,
+      "expected_relation": "preserves_original_guarantee",
+      "approval_rationale": "Residency status becomes a public certificate. Eligibility is possession of a valid certificate, which the fixed supplier worlds do not measure. The architect approves the disclosure and the certificate trust dependency.",
+      "expected_checkability_gain": true,
+      "counts_as_success": true
+    },
+    {
+      "scenario": "residency",
+      "case_id": "residency-private",
+      "original_invariant": "Each candidate supplier processes data in the EU and does not transfer it outside the EEA.",
+      "approved_tactic": "espd_deferred_evidence",
+      "parameters": {"stage": "award"},
+      "expected_relation": "preserves_original_guarantee",
+      "approval_rationale": "Award-stage attestation is the approved check. Selection-stage self-declaration is not in this matrix because it substitutes for the final guarantee.",
+      "expected_checkability_gain": true,
+      "counts_as_success": true
+    },
+    {
+      "scenario": "recovery",
+      "case_id": "recovery-private",
+      "original_invariant": "Every order-authority delegate of the buyer has a cancellation path whose evidence reaches the buyer.",
+      "approved_tactic": "attested_recovery_capability",
+      "parameters": null,
+      "expected_relation": "preserves_original_guarantee",
+      "approval_rationale": "An attestor confirms cancellation capability on each required path edge. The comparison stays the original end-to-end recovery invariant, and the escalation requires approval.",
+      "expected_checkability_gain": true,
+      "counts_as_success": true
+    }
+  ]
+}

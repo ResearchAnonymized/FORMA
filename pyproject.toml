@@ -1,0 +1,13 @@
+[project]
+name = "forma"
+version = "0.2.1"
+description = "Architectural verifiability classifier for multi-principal A2A task plans"
+requires-python = ">=3.11"
+dependencies = [
+    "a2a-sdk[http-server]==1.2.3",
+    "uvicorn==0.38.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

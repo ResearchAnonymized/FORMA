@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/disclosure.schema.json",
+  "title": "Disclosure",
+  "type": "object",
+  "required": ["audience"],
+  "properties": {
+    "audience": {"enum": ["public", "named_partner", "facilitator", "trusted_attestor", "none"]},
+    "partner_ids": {"type": "array", "items": {"type": "string"}},
+    "attestor_agent_id": {"type": "string"}
+  }
+}

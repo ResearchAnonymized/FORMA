@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.local/schemas/live-a2a-scenario-0.1.json",
+  "title": "FORMA live A2A scenario manifest",
+  "type": "object",
+  "required": ["schema_version", "phase", "case_count", "source_hashes", "cases"],
+  "properties": {
+    "schema_version": {"const": "live-a2a-scenario-0.1"},
+    "phase": {"const": "L0"},
+    "case_count": {"type": "integer"},
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "live_case_id",
+          "source_anchor_id",
+          "source_world_id",
+          "domain",
+          "topology",
+          "world_oracle_result",
+          "original_invariant",
+          "natural_language_user_request",
+          "actor_roles",
+          "checker_role",
+          "architecture_mode",
+          "required_agent_card_capabilities",
+          "required_a2a_exchanges",
+          "data_ownership_and_disclosure",
+          "evidence_binding_requirements",
+          "trust_domain_requirements",
+          "expected_classifier_label",
+          "expected_checker_evaluation",
+          "expected_formation_decision",
+          "expected_false_accept_false_reject",
+          "expected_cost_vector",
+          "source_hashes",
+          "provenance"
+        ],
+        "properties": {
+          "architecture_mode": {
+            "enum": [
+              "L0_private_evidence",
+              "L1_selective_disclosure",
+              "L2_single_attestation",
+              "L3_public_certification",
+              "L4_dual_independent_attestation"
+            ]
+          },
+          "topology": {"enum": ["two_principal", "chain", "hub"]},
+          "world_oracle_result": {"enum": ["holds", "violated"]},
+          "expected_formation_decision": {"enum": ["accept", "block", "escalate"]}
+        }
+      }
+    }
+  }
+}

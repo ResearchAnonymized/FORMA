@@ -1,0 +1,109 @@
+{
+  "accepted_returned_model_ids": [
+    "x-ai/grok-4.7",
+    "x-ai/grok-4.7-20260916"
+  ],
+  "account_limit_usd": "50",
+  "account_remaining_usd": "29.470008275",
+  "account_usage_usd": "20.529991725",
+  "audit_status": "audit_pending",
+  "automatic_retry": false,
+  "batches_started": 0,
+  "campaign_id": "l38-openrouter-x-ai-grok-4-7-20260916-75",
+  "canonical_slug": "x-ai/grok-4.7-20260916",
+  "capability_gate_cost": "0.006650",
+  "capability_gate_cost_status": "available",
+  "capability_gate_ledger_sha256": "2b92df4fd78fc66e58401818de6c6a48ab642d4e9557726513f06e4b950868c1",
+  "checked_at": "2026-10-27T07:02:03+00:00",
+  "completion_tokens": [
+    137,
+    196
+  ],
+  "continuation_fields": [
+    "reasoning",
+    "reasoning_details"
+  ],
+  "continuation_fields_by_turn": [
+    [
+      "reasoning",
+      "reasoning_details"
+    ],
+    [
+      "reasoning",
+      "reasoning_details"
+    ]
+  ],
+  "continuation_implemented": true,
+  "continuation_preserved": true,
+  "continuation_required_by_response": true,
+  "continuation_returned": true,
+  "continuation_sha256": "f799be708e4520da06271d3aac9606515181f2fda55f6dfb5a7f9d6455bcec41",
+  "continuation_transport": "preserve_openrouter_reasoning_fields_when_present",
+  "counts_as_campaign_session": false,
+  "credentials_persisted": false,
+  "failure_reasons": [],
+  "fallback_model_allowed": false,
+  "free_text_fallback": false,
+  "local_agent_card": {
+    "agent_name": "user_delegate_agent",
+    "protocol_version": "1.0",
+    "reason": null,
+    "route": "GET /.well-known/agent-card.json"
+  },
+  "local_agent_card_read": true,
+  "max_output_tokens": 768,
+  "opaque_byte_length": 1275,
+  "prompt_tokens": [
+    2187,
+    2635
+  ],
+  "provider_called": true,
+  "provider_calls": 2,
+  "reasoning": {
+    "effort": "low"
+  },
+  "reasoning_effort": "low",
+  "reasoning_tokens": [
+    60,
+    50
+  ],
+  "redaction_isolation_passed": true,
+  "rejected_substitutes": [
+    "tool_choice_auto",
+    "free_text",
+    "unconstrained_prose",
+    "json_response_format",
+    "latest",
+    "grok-latest"
+  ],
+  "requested_model_id": "x-ai/grok-4.7",
+  "resource_guard_decision": "passed",
+  "resource_guard_ledger_sha256": "4bdbcdee360947bf82e651540862793c88f1adf623a1eda86aa08e2101fb383c",
+  "returned_model_id": "x-ai/grok-4.7",
+  "returned_model_ids": [
+    "x-ai/grok-4.7",
+    "x-ai/grok-4.7"
+  ],
+  "scripted_adapter_used": false,
+  "sessions_started": 0,
+  "status": "passed",
+  "structured_choose_next_action": true,
+  "temperature": 0,
+  "tool_choice": {
+    "function": {
+      "name": "choose_next_action"
+    },
+    "type": "function"
+  },
+  "truncated": [
+    false,
+    false
+  ],
+  "upstream_changed": false,
+  "upstream_provider": "xAI",
+  "upstream_provider_pinned": false,
+  "upstream_providers": [
+    "xAI",
+    "xAI"
+  ]
+}

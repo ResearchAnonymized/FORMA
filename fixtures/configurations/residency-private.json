@@ -1,0 +1,303 @@
+{
+  "audience": "none",
+  "case_id": "residency-private",
+  "configuration": "all-private",
+  "disclosure_policy": {
+    "checker_id": "agent-facilitator",
+    "checker_role": "facilitator",
+    "policy_id": "policy-facilitator",
+    "stage": "single"
+  },
+  "evidence_form": "raw_value",
+  "evidence_strength": "self_assertion",
+  "evidence_type": "raw_value",
+  "invariant": {
+    "accepted_strengths": [
+      "public_certification"
+    ],
+    "c3pro": {
+      "c3pro_handled": "false",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "Residency and transfer flags are data predicates, not eCRG activity occurrences."
+    },
+    "depends_on": [
+      "attr-a-region",
+      "attr-a-transfer",
+      "attr-b-region",
+      "attr-b-transfer"
+    ],
+    "formula": {
+      "conjunction": {
+        "atoms": [
+          {
+            "atom_id": "a-region",
+            "attribute_id": "attr-a-region",
+            "expected": "EU",
+            "op": "eq",
+            "owner_id": "org-supplier-a"
+          },
+          {
+            "atom_id": "a-transfer",
+            "attribute_id": "attr-a-transfer",
+            "expected": false,
+            "op": "eq",
+            "owner_id": "org-supplier-a"
+          },
+          {
+            "atom_id": "b-region",
+            "attribute_id": "attr-b-region",
+            "expected": "EU",
+            "op": "eq",
+            "owner_id": "org-supplier-b"
+          },
+          {
+            "atom_id": "b-transfer",
+            "attribute_id": "attr-b-transfer",
+            "expected": false,
+            "op": "eq",
+            "owner_id": "org-supplier-b"
+          }
+        ]
+      }
+    },
+    "invariant_id": "inv-residency",
+    "logical_form": "conjunction",
+    "statement": "Each candidate supplier processes data in the EU and does not transfer it outside the EEA."
+  },
+  "original_invariant": {
+    "accepted_strengths": [
+      "public_certification"
+    ],
+    "c3pro": {
+      "c3pro_handled": "false",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "Residency and transfer flags are data predicates, not eCRG activity occurrences."
+    },
+    "depends_on": [
+      "attr-a-region",
+      "attr-a-transfer",
+      "attr-b-region",
+      "attr-b-transfer"
+    ],
+    "formula": {
+      "conjunction": {
+        "atoms": [
+          {
+            "atom_id": "a-region",
+            "attribute_id": "attr-a-region",
+            "expected": "EU",
+            "op": "eq",
+            "owner_id": "org-supplier-a"
+          },
+          {
+            "atom_id": "a-transfer",
+            "attribute_id": "attr-a-transfer",
+            "expected": false,
+            "op": "eq",
+            "owner_id": "org-supplier-a"
+          },
+          {
+            "atom_id": "b-region",
+            "attribute_id": "attr-b-region",
+            "expected": "EU",
+            "op": "eq",
+            "owner_id": "org-supplier-b"
+          },
+          {
+            "atom_id": "b-transfer",
+            "attribute_id": "attr-b-transfer",
+            "expected": false,
+            "op": "eq",
+            "owner_id": "org-supplier-b"
+          }
+        ]
+      }
+    },
+    "invariant_id": "inv-residency",
+    "logical_form": "conjunction",
+    "statement": "Each candidate supplier processes data in the EU and does not transfer it outside the EEA."
+  },
+  "plan": {
+    "agents": [
+      {
+        "agent_id": "agent-buyer",
+        "name": "Buyer",
+        "owner_id": "org-buyer"
+      },
+      {
+        "agent_id": "agent-supplier-a",
+        "name": "Supplier A",
+        "owner_id": "org-supplier-a"
+      },
+      {
+        "agent_id": "agent-supplier-b",
+        "name": "Supplier B",
+        "owner_id": "org-supplier-b"
+      },
+      {
+        "agent_id": "agent-facilitator",
+        "name": "Facilitator",
+        "owner_id": "org-facilitator"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "attr-a-region",
+        "disclosure": {
+          "audience": "none"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "self_assertion"
+        },
+        "name": "processing_region",
+        "owner_id": "org-supplier-a",
+        "subject": {
+          "id": "agent-supplier-a",
+          "kind": "agent"
+        },
+        "value": "US",
+        "visibility": "private"
+      },
+      {
+        "attribute_id": "attr-a-transfer",
+        "disclosure": {
+          "audience": "none"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "self_assertion"
+        },
+        "name": "transfers_outside_eea",
+        "owner_id": "org-supplier-a",
+        "subject": {
+          "id": "agent-supplier-a",
+          "kind": "agent"
+        },
+        "value": true,
+        "visibility": "private"
+      },
+      {
+        "attribute_id": "attr-b-region",
+        "disclosure": {
+          "audience": "none"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "self_assertion"
+        },
+        "name": "processing_region",
+        "owner_id": "org-supplier-b",
+        "subject": {
+          "id": "agent-supplier-b",
+          "kind": "agent"
+        },
+        "value": "EU",
+        "visibility": "private"
+      },
+      {
+        "attribute_id": "attr-b-transfer",
+        "disclosure": {
+          "audience": "none"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "self_assertion"
+        },
+        "name": "transfers_outside_eea",
+        "owner_id": "org-supplier-b",
+        "subject": {
+          "id": "agent-supplier-b",
+          "kind": "agent"
+        },
+        "value": false,
+        "visibility": "private"
+      }
+    ],
+    "award_policy": "exactly_one",
+    "connectors": [
+      {
+        "connector_id": "con-detail-a",
+        "from_agent_id": "agent-buyer",
+        "interaction_type": "requirements.detailed",
+        "to_agent_id": "agent-supplier-a"
+      },
+      {
+        "connector_id": "con-detail-b",
+        "from_agent_id": "agent-buyer",
+        "interaction_type": "requirements.detailed",
+        "to_agent_id": "agent-supplier-b"
+      }
+    ],
+    "data_flows": [
+      {
+        "attribute_ids": [],
+        "connector_id": "con-detail-a",
+        "data_class": "requirements.detailed",
+        "flow_id": "df-detail-a"
+      },
+      {
+        "attribute_ids": [],
+        "connector_id": "con-detail-b",
+        "data_class": "requirements.detailed",
+        "flow_id": "df-detail-b"
+      }
+    ],
+    "delegations": [],
+    "evidence_flows": [],
+    "owners": [
+      {
+        "kind": "organisation",
+        "name": "Buyer Organisation",
+        "owner_id": "org-buyer"
+      },
+      {
+        "kind": "organisation",
+        "name": "Supplier A Organisation",
+        "owner_id": "org-supplier-a"
+      },
+      {
+        "kind": "organisation",
+        "name": "Supplier B Organisation",
+        "owner_id": "org-supplier-b"
+      },
+      {
+        "kind": "organisation",
+        "name": "Formation Facilitator",
+        "owner_id": "org-facilitator"
+      }
+    ],
+    "plan_id": "plan-residency-private",
+    "recovery": [],
+    "roles": [
+      {
+        "agent_ids": [
+          "agent-buyer"
+        ],
+        "role_id": "buyer"
+      },
+      {
+        "agent_ids": [
+          "agent-supplier-a",
+          "agent-supplier-b"
+        ],
+        "role_id": "candidate_supplier"
+      },
+      {
+        "agent_ids": [
+          "agent-facilitator"
+        ],
+        "role_id": "facilitator"
+      }
+    ],
+    "task_id": "task-residency-private",
+    "task_statement": "Send detailed requirements only to a supplier that processes data in the EU."
+  },
+  "plan_variant": "two-supplier",
+  "prospective_c3pro_comparison_case": true,
+  "scenario_id": "residency-private-policy",
+  "stage": "single",
+  "trust_assumption": "The facilitator accepts only public certification. Region and transfer flags are disclosed to nobody."
+}

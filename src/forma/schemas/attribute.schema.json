@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/attribute.schema.json",
+  "title": "Attribute",
+  "type": "object",
+  "required": ["attribute_id", "name", "subject", "value", "owner_id", "visibility", "disclosure", "evidence"],
+  "properties": {
+    "attribute_id": {"type": "string"},
+    "name": {"type": "string"},
+    "subject": {
+      "type": "object",
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {"enum": ["agent", "task", "recovery"]},
+        "id": {"type": "string"}
+      }
+    },
+    "owner_id": {"type": "string"},
+    "visibility": {"enum": ["private", "restricted", "public"]},
+    "disclosure": {"$ref": "disclosure.schema.json"},
+    "evidence": {"$ref": "evidence.schema.json"},
+    "copy_of": {"type": "string"}
+  }
+}

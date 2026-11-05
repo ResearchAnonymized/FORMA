@@ -1,0 +1,50 @@
+{
+  "status": "prospective",
+  "c3pro_coverage_claimed": false,
+  "tactic_success_claimed": false,
+  "note": "Catalogue controls and expected labels only. No tactic is implemented or scored. A checkable substitute is not preservation of the original invariant.",
+  "entries": [
+    {
+      "entry_id": "control-supplier-price-assertion",
+      "control": true,
+      "scenario": "budget-private-prices",
+      "original_invariant": "The sum of all selected supplier prices is less than or equal to the total task budget.",
+      "candidate_tactic": "Each supplier asserts that its own price is less than or equal to the budget.",
+      "expected_pre_label": "evidence_distributed",
+      "post_original_invariant_label": "evidence_distributed",
+      "post_checked_predicate_label": "checkable_by_bounded_assertion",
+      "fixture_level_guarantee_relation": "substitutes_guarantee_requires_architect_approval",
+      "architect_approval_expected": true,
+      "negative_control": true,
+      "representation": "substitute_or_weakening_candidate"
+    },
+    {
+      "entry_id": "control-processor-for-subprocessors",
+      "control": true,
+      "scenario": "residency-private-policy",
+      "original_invariant": "Every supplier's own sub-processor flag satisfies the residency policy.",
+      "candidate_tactic": "A processor asserts the residency claim on behalf of its sub-processors.",
+      "expected_pre_label": "evidence_distributed",
+      "post_original_invariant_label": "evidence_distributed",
+      "post_checked_predicate_label": "checkable_by_bounded_assertion",
+      "fixture_level_guarantee_relation": "substitutes_guarantee_requires_architect_approval",
+      "architect_approval_expected": true,
+      "negative_control": true,
+      "representation": "substitute_or_weakening_candidate"
+    },
+    {
+      "entry_id": "control-escrow-replaces-recovery",
+      "control": true,
+      "scenario": "e2e-recovery",
+      "original_invariant": "Every required order-authority path supports cancellation recovery to the buyer.",
+      "candidate_tactic": "Escrow or compensation replaces the end-to-end recovery path.",
+      "expected_pre_label": "evidence_distributed",
+      "post_original_invariant_label": "evidence_distributed",
+      "post_checked_predicate_label": "checkable_by_bounded_assertion",
+      "fixture_level_guarantee_relation": "substitutes_guarantee_requires_architect_approval",
+      "architect_approval_expected": true,
+      "negative_control": true,
+      "representation": "substitute_or_weakening_candidate"
+    }
+  ]
+}

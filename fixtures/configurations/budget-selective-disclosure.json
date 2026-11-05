@@ -1,0 +1,272 @@
+{
+  "audience": "facilitator",
+  "case_id": "budget-selective-disclosure",
+  "configuration": "selective-disclosure",
+  "disclosure_policy": {
+    "checker_id": "agent-facilitator",
+    "checker_role": "facilitator",
+    "policy_id": "policy-facilitator",
+    "stage": "single"
+  },
+  "evidence_form": "raw_value",
+  "evidence_strength": "revealed_value",
+  "evidence_type": "raw_value",
+  "invariant": {
+    "accepted_strengths": [
+      "revealed_value",
+      "third_party_attestation",
+      "public_certification"
+    ],
+    "c3pro": {
+      "c3pro_handled": "false",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "The formula is a sum of private supplier prices. C3Pro GCRs do not express that sum."
+    },
+    "depends_on": [
+      "attr-budget",
+      "attr-a-line-total",
+      "attr-b-line-total"
+    ],
+    "formula": {
+      "aggregate": {
+        "bound_attribute_id": "attr-budget",
+        "op": "sum_le",
+        "term_attribute_ids": [
+          "attr-a-line-total",
+          "attr-b-line-total"
+        ]
+      }
+    },
+    "invariant_id": "inv-budget-total",
+    "logical_form": "aggregate",
+    "statement": "The sum of all selected supplier prices is less than or equal to the total task budget."
+  },
+  "original_invariant": {
+    "accepted_strengths": [
+      "revealed_value",
+      "third_party_attestation",
+      "public_certification"
+    ],
+    "c3pro": {
+      "c3pro_handled": "false",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "The formula is a sum of private supplier prices. C3Pro GCRs do not express that sum."
+    },
+    "depends_on": [
+      "attr-budget",
+      "attr-a-line-total",
+      "attr-b-line-total"
+    ],
+    "formula": {
+      "aggregate": {
+        "bound_attribute_id": "attr-budget",
+        "op": "sum_le",
+        "term_attribute_ids": [
+          "attr-a-line-total",
+          "attr-b-line-total"
+        ]
+      }
+    },
+    "invariant_id": "inv-budget-total",
+    "logical_form": "aggregate",
+    "statement": "The sum of all selected supplier prices is less than or equal to the total task budget."
+  },
+  "plan": {
+    "agents": [
+      {
+        "agent_id": "agent-buyer",
+        "name": "Buyer",
+        "owner_id": "org-buyer",
+        "skills": [
+          "approve-purchase"
+        ]
+      },
+      {
+        "agent_id": "agent-supplier-a",
+        "name": "Supplier A",
+        "owner_id": "org-supplier-a",
+        "skills": [
+          "supply-sensors"
+        ]
+      },
+      {
+        "agent_id": "agent-supplier-b",
+        "name": "Supplier B",
+        "owner_id": "org-supplier-b",
+        "skills": [
+          "supply-sensors"
+        ]
+      },
+      {
+        "agent_id": "agent-facilitator",
+        "name": "Facilitator",
+        "owner_id": "org-facilitator",
+        "skills": []
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "attr-budget",
+        "disclosure": {
+          "audience": "public"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "revealed_value"
+        },
+        "name": "budget_eur",
+        "owner_id": "org-buyer",
+        "subject": {
+          "id": "task-budget-private",
+          "kind": "task"
+        },
+        "value": 20000,
+        "visibility": "public"
+      },
+      {
+        "attribute_id": "attr-a-line-total",
+        "disclosure": {
+          "audience": "facilitator"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "revealed_value"
+        },
+        "name": "line_total_eur",
+        "owner_id": "org-supplier-a",
+        "subject": {
+          "id": "agent-supplier-a",
+          "kind": "agent"
+        },
+        "value": 15000,
+        "visibility": "restricted"
+      },
+      {
+        "attribute_id": "attr-b-line-total",
+        "disclosure": {
+          "audience": "facilitator"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "revealed_value"
+        },
+        "name": "line_total_eur",
+        "owner_id": "org-supplier-b",
+        "subject": {
+          "id": "agent-supplier-b",
+          "kind": "agent"
+        },
+        "value": 19000,
+        "visibility": "restricted"
+      }
+    ],
+    "award_policy": "exactly_one",
+    "connectors": [
+      {
+        "connector_id": "con-rfq-a",
+        "from_agent_id": "agent-buyer",
+        "interaction_type": "rfq.public",
+        "to_agent_id": "agent-supplier-a"
+      },
+      {
+        "connector_id": "con-rfq-b",
+        "from_agent_id": "agent-buyer",
+        "interaction_type": "rfq.public",
+        "to_agent_id": "agent-supplier-b"
+      }
+    ],
+    "data_flows": [
+      {
+        "attribute_ids": [
+          "attr-a-line-total"
+        ],
+        "connector_id": "con-rfq-a",
+        "data_class": "quote",
+        "flow_id": "df-quote-a"
+      },
+      {
+        "attribute_ids": [
+          "attr-b-line-total"
+        ],
+        "connector_id": "con-rfq-b",
+        "data_class": "quote",
+        "flow_id": "df-quote-b"
+      }
+    ],
+    "delegations": [],
+    "evidence_flows": [
+      {
+        "attribute_id": "attr-a-line-total",
+        "audience": "facilitator",
+        "flow_id": "ef-a-price",
+        "form": "raw_value",
+        "from_agent_id": "agent-supplier-a",
+        "strength": "revealed_value",
+        "to_agent_id": "agent-facilitator"
+      },
+      {
+        "attribute_id": "attr-b-line-total",
+        "audience": "facilitator",
+        "flow_id": "ef-b-price",
+        "form": "raw_value",
+        "from_agent_id": "agent-supplier-b",
+        "strength": "revealed_value",
+        "to_agent_id": "agent-facilitator"
+      }
+    ],
+    "owners": [
+      {
+        "kind": "organisation",
+        "name": "Buyer Organisation",
+        "owner_id": "org-buyer"
+      },
+      {
+        "kind": "organisation",
+        "name": "Supplier A Organisation",
+        "owner_id": "org-supplier-a"
+      },
+      {
+        "kind": "organisation",
+        "name": "Supplier B Organisation",
+        "owner_id": "org-supplier-b"
+      },
+      {
+        "kind": "organisation",
+        "name": "Formation Facilitator",
+        "owner_id": "org-facilitator"
+      }
+    ],
+    "plan_id": "plan-budget-private",
+    "recovery": [],
+    "roles": [
+      {
+        "agent_ids": [
+          "agent-buyer"
+        ],
+        "role_id": "buyer"
+      },
+      {
+        "agent_ids": [
+          "agent-supplier-a",
+          "agent-supplier-b"
+        ],
+        "role_id": "candidate_supplier"
+      },
+      {
+        "agent_ids": [
+          "agent-facilitator"
+        ],
+        "role_id": "facilitator"
+      }
+    ],
+    "task_id": "task-budget-private",
+    "task_statement": "Procure 50 industrial sensors under 20000 EUR."
+  },
+  "plan_variant": "two-supplier",
+  "prospective_c3pro_comparison_case": false,
+  "scenario_id": "budget-private-prices",
+  "stage": "single",
+  "trust_assumption": "Accepted strengths are unchanged. Raw line totals are revealed only to the facilitator."
+}

@@ -1,0 +1,37 @@
+{
+  "attribute": {
+    "attribute_id": "attr-declaration",
+    "name": "supplier_declaration",
+    "subject": {"kind": "agent", "id": "agent-supplier-a"},
+    "value": true,
+    "owner_id": "org-supplier-a",
+    "visibility": "restricted",
+    "disclosure": {"audience": "facilitator"},
+    "evidence": {
+      "form": "owner_asserted_predicate",
+      "strength": "self_assertion",
+      "predicate": {"op": "eq", "expected": true},
+      "derived_from": ["attr-a-line-total"]
+    }
+  },
+  "invariant_id": "inv-two-stage-declaration",
+  "statement": "Supplier A declares the selection-stage predicate.",
+  "strength_by_stage": {
+    "selection": ["self_assertion"],
+    "award": ["third_party_attestation"]
+  },
+  "policies": {
+    "selection": {
+      "policy_id": "policy-selection",
+      "checker_id": "agent-facilitator",
+      "checker_role": "facilitator",
+      "stage": "selection"
+    },
+    "award": {
+      "policy_id": "policy-award",
+      "checker_id": "agent-facilitator",
+      "checker_role": "facilitator",
+      "stage": "award"
+    }
+  }
+}

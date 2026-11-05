@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/evidence.schema.json",
+  "title": "Evidence",
+  "type": "object",
+  "required": ["form", "strength"],
+  "properties": {
+    "form": {"enum": ["raw_value", "owner_asserted_predicate", "third_party_attested_predicate", "public_certificate"]},
+    "strength": {"enum": ["self_assertion", "revealed_value", "third_party_attestation", "public_certification"]},
+    "predicate": {"type": "object"},
+    "derived_from": {"type": "array", "items": {"type": "string"}},
+    "issuer_owner_id": {"type": "string"}
+  },
+  "description": "Legal pairs are enforced in code: raw_value/self_assertion, raw_value/revealed_value, owner_asserted_predicate/self_assertion, third_party_attested_predicate/third_party_attestation, public_certificate/public_certification."
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/plan.schema.json",
+  "title": "Task plan",
+  "type": "object",
+  "required": ["plan_id", "task_id", "task_statement", "award_policy", "owners", "agents", "roles", "connectors", "delegations", "data_flows", "evidence_flows", "recovery", "attributes"],
+  "properties": {
+    "plan_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "task_statement": {"type": "string", "minLength": 1},
+    "award_policy": {"enum": ["exactly_one", "set"]},
+    "owners": {"type": "array"},
+    "agents": {"type": "array"},
+    "roles": {"type": "array"},
+    "connectors": {"type": "array"},
+    "delegations": {"type": "array"},
+    "data_flows": {"type": "array"},
+    "evidence_flows": {"type": "array"},
+    "recovery": {"type": "array"},
+    "attributes": {"type": "array"}
+  },
+  "description": "Structural schema. Pairing rules for evidence form, strength, visibility, and audience are enforced by forma.validate."
+}

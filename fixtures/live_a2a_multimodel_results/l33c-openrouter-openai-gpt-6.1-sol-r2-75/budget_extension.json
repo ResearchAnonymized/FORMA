@@ -1,0 +1,1 @@
+{"batch_limit":6.0,"campaign_ceiling":76.0,"campaign_id":"l33c-openrouter-openai-gpt-6.1-sol-r2-75","completed_batches":6,"rule":"After a batch finishes, the campaign ceiling grows by one batch limit and the next batch starts.","safety_reserve":4.0,"updated_at":"2026-10-25T17:44:22+00:00"}

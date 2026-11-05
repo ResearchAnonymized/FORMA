@@ -1,0 +1,95 @@
+{
+  "scenario_id": "budget-private-prices",
+  "plan": {
+    "plan_id": "plan-budget-private",
+    "task_id": "task-budget-private",
+    "task_statement": "Procure 50 industrial sensors under 20000 EUR.",
+    "award_policy": "exactly_one",
+    "owners": [
+      {"owner_id": "org-buyer", "name": "Buyer Organisation", "kind": "organisation"},
+      {"owner_id": "org-supplier-a", "name": "Supplier A Organisation", "kind": "organisation"},
+      {"owner_id": "org-supplier-b", "name": "Supplier B Organisation", "kind": "organisation"},
+      {"owner_id": "org-facilitator", "name": "Formation Facilitator", "kind": "organisation"}
+    ],
+    "agents": [
+      {"agent_id": "agent-buyer", "name": "Buyer", "owner_id": "org-buyer", "skills": ["approve-purchase"]},
+      {"agent_id": "agent-supplier-a", "name": "Supplier A", "owner_id": "org-supplier-a", "skills": ["supply-sensors"]},
+      {"agent_id": "agent-supplier-b", "name": "Supplier B", "owner_id": "org-supplier-b", "skills": ["supply-sensors"]},
+      {"agent_id": "agent-facilitator", "name": "Facilitator", "owner_id": "org-facilitator", "skills": []}
+    ],
+    "roles": [
+      {"role_id": "buyer", "agent_ids": ["agent-buyer"]},
+      {"role_id": "candidate_supplier", "agent_ids": ["agent-supplier-a", "agent-supplier-b"]},
+      {"role_id": "facilitator", "agent_ids": ["agent-facilitator"]}
+    ],
+    "connectors": [
+      {"connector_id": "con-rfq-a", "from_agent_id": "agent-buyer", "to_agent_id": "agent-supplier-a", "interaction_type": "rfq.public"},
+      {"connector_id": "con-rfq-b", "from_agent_id": "agent-buyer", "to_agent_id": "agent-supplier-b", "interaction_type": "rfq.public"}
+    ],
+    "delegations": [],
+    "data_flows": [
+      {"flow_id": "df-quote-a", "connector_id": "con-rfq-a", "data_class": "quote", "attribute_ids": ["attr-a-line-total"]},
+      {"flow_id": "df-quote-b", "connector_id": "con-rfq-b", "data_class": "quote", "attribute_ids": ["attr-b-line-total"]}
+    ],
+    "evidence_flows": [],
+    "recovery": [],
+    "attributes": [
+      {
+        "attribute_id": "attr-budget",
+        "name": "budget_eur",
+        "subject": {"kind": "task", "id": "task-budget-private"},
+        "value": 20000,
+        "owner_id": "org-buyer",
+        "visibility": "public",
+        "disclosure": {"audience": "public"},
+        "evidence": {"form": "raw_value", "strength": "revealed_value"}
+      },
+      {
+        "attribute_id": "attr-a-line-total",
+        "name": "line_total_eur",
+        "subject": {"kind": "agent", "id": "agent-supplier-a"},
+        "value": 15000,
+        "owner_id": "org-supplier-a",
+        "visibility": "private",
+        "disclosure": {"audience": "none"},
+        "evidence": {"form": "raw_value", "strength": "self_assertion"}
+      },
+      {
+        "attribute_id": "attr-b-line-total",
+        "name": "line_total_eur",
+        "subject": {"kind": "agent", "id": "agent-supplier-b"},
+        "value": 19000,
+        "owner_id": "org-supplier-b",
+        "visibility": "private",
+        "disclosure": {"audience": "none"},
+        "evidence": {"form": "raw_value", "strength": "self_assertion"}
+      }
+    ]
+  },
+  "invariant": {
+    "invariant_id": "inv-budget-total",
+    "logical_form": "aggregate",
+    "statement": "The sum of all selected supplier prices is less than or equal to the total task budget.",
+    "accepted_strengths": ["revealed_value", "third_party_attestation", "public_certification"],
+    "depends_on": ["attr-budget", "attr-a-line-total", "attr-b-line-total"],
+    "formula": {
+      "aggregate": {
+        "op": "sum_le",
+        "term_attribute_ids": ["attr-a-line-total", "attr-b-line-total"],
+        "bound_attribute_id": "attr-budget"
+      }
+    },
+    "c3pro": {
+      "c3pro_handled": "false",
+      "reason": "The formula is a sum of private supplier prices. C3Pro GCRs do not express that sum.",
+      "expressible_in_rule_formalism": false,
+      "decomposable_under_published_algorithm": false
+    }
+  },
+  "disclosure_policy": {
+    "policy_id": "policy-facilitator",
+    "checker_id": "agent-facilitator",
+    "checker_role": "facilitator",
+    "stage": "single"
+  }
+}

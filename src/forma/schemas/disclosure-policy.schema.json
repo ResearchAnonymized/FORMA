@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/disclosure-policy.schema.json",
+  "title": "Disclosure policy",
+  "type": "object",
+  "required": ["policy_id", "checker_id", "checker_role", "stage"],
+  "properties": {
+    "policy_id": {"type": "string"},
+    "checker_id": {"type": "string"},
+    "checker_role": {"enum": ["facilitator", "participant"]},
+    "stage": {"enum": ["single", "selection", "award"]}
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/suggestion.schema.json",
+  "title": "Tactic suggestion",
+  "description": "The guarantee field is the v0.2.1 name. Phase B.1 result records are the JSON files under fixtures/tactic_results.",
+  "type": "object",
+  "required": ["tactic_id", "fixture_level_guarantee_relation", "feasibility_achieved", "original_guarantee_preserved", "architect_approval_required", "counts_as_success", "costs", "plan_delta"],
+  "properties": {
+    "fixture_level_guarantee_relation": {
+      "enum": [
+        "preserves_original_guarantee",
+        "strengthens_original_guarantee",
+        "restricts_solution_space_but_preserves_guarantee",
+        "weakens_original_guarantee",
+        "substitutes_guarantee_requires_architect_approval"
+      ]
+    }
+  }
+}

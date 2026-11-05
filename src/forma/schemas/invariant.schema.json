@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forma.research/schemas/invariant.schema.json",
+  "title": "Invariant",
+  "type": "object",
+  "required": ["invariant_id", "logical_form", "statement", "accepted_strengths", "depends_on", "formula", "c3pro"],
+  "properties": {
+    "logical_form": {"enum": ["public_atom", "conjunction", "aggregate", "relational_path"]},
+    "accepted_strengths": {"type": "array", "minItems": 1},
+    "c3pro": {
+      "type": "object",
+      "required": ["c3pro_handled", "reason", "expressible_in_rule_formalism", "decomposable_under_published_algorithm"],
+      "properties": {
+        "c3pro_handled": {"enum": ["true", "false", "unclear"]}
+      }
+    }
+  },
+  "not": {"required": ["kind"]}
+}

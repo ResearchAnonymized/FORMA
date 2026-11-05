@@ -1,0 +1,368 @@
+{
+  "audience": "facilitator",
+  "case_id": "budget-third-party",
+  "configuration": "third-party-attested",
+  "disclosure_policy": {
+    "checker_id": "agent-facilitator",
+    "checker_role": "facilitator",
+    "policy_id": "policy-facilitator",
+    "stage": "single"
+  },
+  "evidence_form": "third_party_attested_predicate",
+  "evidence_strength": "third_party_attestation",
+  "evidence_type": "third_party_attested_predicate",
+  "invariant": {
+    "accepted_strengths": [
+      "revealed_value",
+      "third_party_attestation",
+      "public_certification"
+    ],
+    "c3pro": {
+      "c3pro_handled": "false",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "The formula is a sum of private supplier prices. C3Pro GCRs do not express that sum."
+    },
+    "depends_on": [
+      "attr-budget",
+      "attr-a-line-total",
+      "attr-b-line-total",
+      "attr-budget-attested"
+    ],
+    "formula": {
+      "aggregate": {
+        "attestation_attribute_id": "attr-budget-attested",
+        "bound_attribute_id": "attr-budget",
+        "op": "sum_le",
+        "term_attribute_ids": [
+          "attr-a-line-total",
+          "attr-b-line-total"
+        ]
+      }
+    },
+    "invariant_id": "inv-budget-total",
+    "logical_form": "aggregate",
+    "statement": "The sum of all selected supplier prices is less than or equal to the total task budget."
+  },
+  "original_invariant": {
+    "accepted_strengths": [
+      "revealed_value",
+      "third_party_attestation",
+      "public_certification"
+    ],
+    "c3pro": {
+      "c3pro_handled": "false",
+      "decomposable_under_published_algorithm": false,
+      "expressible_in_rule_formalism": false,
+      "reason": "The formula is a sum of private supplier prices. C3Pro GCRs do not express that sum."
+    },
+    "depends_on": [
+      "attr-budget",
+      "attr-a-line-total",
+      "attr-b-line-total",
+      "attr-budget-attested"
+    ],
+    "formula": {
+      "aggregate": {
+        "attestation_attribute_id": "attr-budget-attested",
+        "bound_attribute_id": "attr-budget",
+        "op": "sum_le",
+        "term_attribute_ids": [
+          "attr-a-line-total",
+          "attr-b-line-total"
+        ]
+      }
+    },
+    "invariant_id": "inv-budget-total",
+    "logical_form": "aggregate",
+    "statement": "The sum of all selected supplier prices is less than or equal to the total task budget."
+  },
+  "plan": {
+    "agents": [
+      {
+        "agent_id": "agent-buyer",
+        "name": "Buyer",
+        "owner_id": "org-buyer",
+        "skills": [
+          "approve-purchase"
+        ]
+      },
+      {
+        "agent_id": "agent-supplier-a",
+        "name": "Supplier A",
+        "owner_id": "org-supplier-a",
+        "skills": [
+          "supply-sensors"
+        ]
+      },
+      {
+        "agent_id": "agent-supplier-b",
+        "name": "Supplier B",
+        "owner_id": "org-supplier-b",
+        "skills": [
+          "supply-sensors"
+        ]
+      },
+      {
+        "agent_id": "agent-facilitator",
+        "name": "Facilitator",
+        "owner_id": "org-facilitator",
+        "skills": []
+      },
+      {
+        "agent_id": "agent-attestor",
+        "name": "Attestor",
+        "owner_id": "org-attestor"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "attr-budget",
+        "disclosure": {
+          "audience": "public"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "revealed_value"
+        },
+        "name": "budget_eur",
+        "owner_id": "org-buyer",
+        "subject": {
+          "id": "task-budget-private",
+          "kind": "task"
+        },
+        "value": 20000,
+        "visibility": "public"
+      },
+      {
+        "attribute_id": "attr-a-line-total",
+        "disclosure": {
+          "audience": "none"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "self_assertion"
+        },
+        "name": "line_total_eur",
+        "owner_id": "org-supplier-a",
+        "subject": {
+          "id": "agent-supplier-a",
+          "kind": "agent"
+        },
+        "value": 15000,
+        "visibility": "private"
+      },
+      {
+        "attribute_id": "attr-b-line-total",
+        "disclosure": {
+          "audience": "none"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "self_assertion"
+        },
+        "name": "line_total_eur",
+        "owner_id": "org-supplier-b",
+        "subject": {
+          "id": "agent-supplier-b",
+          "kind": "agent"
+        },
+        "value": 19000,
+        "visibility": "private"
+      },
+      {
+        "attribute_id": "attr-a-line-total-escrow",
+        "copy_of": "attr-a-line-total",
+        "disclosure": {
+          "attestor_agent_id": "agent-attestor",
+          "audience": "trusted_attestor"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "revealed_value"
+        },
+        "name": "line_total_eur",
+        "owner_id": "org-supplier-a",
+        "subject": {
+          "id": "agent-supplier-a",
+          "kind": "agent"
+        },
+        "value": 15000,
+        "visibility": "restricted"
+      },
+      {
+        "attribute_id": "attr-b-line-total-escrow",
+        "copy_of": "attr-b-line-total",
+        "disclosure": {
+          "attestor_agent_id": "agent-attestor",
+          "audience": "trusted_attestor"
+        },
+        "evidence": {
+          "form": "raw_value",
+          "strength": "revealed_value"
+        },
+        "name": "line_total_eur",
+        "owner_id": "org-supplier-b",
+        "subject": {
+          "id": "agent-supplier-b",
+          "kind": "agent"
+        },
+        "value": 19000,
+        "visibility": "restricted"
+      },
+      {
+        "attribute_id": "attr-budget-attested",
+        "disclosure": {
+          "audience": "facilitator"
+        },
+        "evidence": {
+          "derived_from": [
+            "attr-a-line-total-escrow",
+            "attr-b-line-total-escrow"
+          ],
+          "form": "third_party_attested_predicate",
+          "issuer_owner_id": "org-attestor",
+          "predicate": {
+            "bound_attribute_id": "attr-budget",
+            "op": "le"
+          },
+          "strength": "third_party_attestation"
+        },
+        "name": "within_budget",
+        "owner_id": "org-attestor",
+        "subject": {
+          "id": "task-budget-private",
+          "kind": "task"
+        },
+        "value": false,
+        "visibility": "restricted"
+      }
+    ],
+    "award_policy": "exactly_one",
+    "connectors": [
+      {
+        "connector_id": "con-rfq-a",
+        "from_agent_id": "agent-buyer",
+        "interaction_type": "rfq.public",
+        "to_agent_id": "agent-supplier-a"
+      },
+      {
+        "connector_id": "con-rfq-b",
+        "from_agent_id": "agent-buyer",
+        "interaction_type": "rfq.public",
+        "to_agent_id": "agent-supplier-b"
+      }
+    ],
+    "data_flows": [
+      {
+        "attribute_ids": [
+          "attr-a-line-total"
+        ],
+        "connector_id": "con-rfq-a",
+        "data_class": "quote",
+        "flow_id": "df-quote-a"
+      },
+      {
+        "attribute_ids": [
+          "attr-b-line-total"
+        ],
+        "connector_id": "con-rfq-b",
+        "data_class": "quote",
+        "flow_id": "df-quote-b"
+      }
+    ],
+    "delegations": [],
+    "evidence_flows": [
+      {
+        "attribute_id": "attr-a-line-total-escrow",
+        "audience": "trusted_attestor",
+        "flow_id": "ef-a-escrow",
+        "form": "raw_value",
+        "from_agent_id": "agent-supplier-a",
+        "strength": "revealed_value",
+        "to_agent_id": "agent-attestor"
+      },
+      {
+        "attribute_id": "attr-b-line-total-escrow",
+        "audience": "trusted_attestor",
+        "flow_id": "ef-b-escrow",
+        "form": "raw_value",
+        "from_agent_id": "agent-supplier-b",
+        "strength": "revealed_value",
+        "to_agent_id": "agent-attestor"
+      },
+      {
+        "attribute_id": "attr-budget-attested",
+        "audience": "facilitator",
+        "flow_id": "ef-budget-attested",
+        "form": "third_party_attested_predicate",
+        "from_agent_id": "agent-attestor",
+        "strength": "third_party_attestation",
+        "to_agent_id": "agent-facilitator"
+      }
+    ],
+    "owners": [
+      {
+        "kind": "organisation",
+        "name": "Buyer Organisation",
+        "owner_id": "org-buyer"
+      },
+      {
+        "kind": "organisation",
+        "name": "Supplier A Organisation",
+        "owner_id": "org-supplier-a"
+      },
+      {
+        "kind": "organisation",
+        "name": "Supplier B Organisation",
+        "owner_id": "org-supplier-b"
+      },
+      {
+        "kind": "organisation",
+        "name": "Formation Facilitator",
+        "owner_id": "org-facilitator"
+      },
+      {
+        "kind": "authority",
+        "name": "Attestor",
+        "owner_id": "org-attestor"
+      }
+    ],
+    "plan_id": "plan-budget-private",
+    "recovery": [],
+    "roles": [
+      {
+        "agent_ids": [
+          "agent-buyer"
+        ],
+        "role_id": "buyer"
+      },
+      {
+        "agent_ids": [
+          "agent-supplier-a",
+          "agent-supplier-b"
+        ],
+        "role_id": "candidate_supplier"
+      },
+      {
+        "agent_ids": [
+          "agent-facilitator"
+        ],
+        "role_id": "facilitator"
+      },
+      {
+        "agent_ids": [
+          "agent-attestor"
+        ],
+        "role_id": "trusted_attestor"
+      }
+    ],
+    "task_id": "task-budget-private",
+    "task_statement": "Procure 50 industrial sensors under 20000 EUR."
+  },
+  "plan_variant": "two-supplier",
+  "prospective_c3pro_comparison_case": false,
+  "scenario_id": "budget-private-prices",
+  "stage": "single",
+  "trust_assumption": "third_party_attestation is already accepted. The attestor sees raw escrow copies. The facilitator sees only the attested boolean. Original prices stay audience none."
+}
