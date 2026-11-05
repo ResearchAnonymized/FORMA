@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FORMA</title>
-  <meta name="description" content="FORMA workflow: architectural inputs, verification and formation, then tactic assessment.">
+  <meta name="description" content="Agents exchange a task and evidence. FORMA blocks one path and accepts another.">
   <style>
     :root {
       color-scheme: dark;
@@ -13,9 +13,10 @@
       --card: #1a1f27;
       --ink: #eceef1;
       --muted: #949ba8;
-      --line: #2c3440;
+      --line: #373e4a;
       --accent: #6ee7d4;
       --ok: #86efac;
+      --block: #f4a49c;
     }
     * { box-sizing: border-box; }
     body {
@@ -24,71 +25,164 @@
       color: var(--ink);
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
-    main { max-width: 72rem; margin: 0 auto; padding: 3.2rem 1.2rem 2.4rem; }
+    main { max-width: 68rem; margin: 0 auto; padding: 2.6rem 1.2rem 2.4rem; }
     header p { margin: 0; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.74rem; }
-    h1 { margin: 0.35rem 0 0; font-size: clamp(2.8rem, 6vw, 4.4rem); font-weight: 560; letter-spacing: -0.045em; }
-    .lede { max-width: 42rem; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
-    .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-top: 1.6rem; }
-    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 0.9rem; }
-    .panel h2 { margin: 0 0 0.7rem; font-size: 0.98rem; font-weight: 560; }
-    .step, .decision, .rail span {
+    h1 { margin: 0.3rem 0 0; font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 560; letter-spacing: -0.045em; }
+    .lede { max-width: 40rem; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
+    .stage {
+      position: relative;
+      margin-top: 1.4rem;
+      height: 22rem;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #0e1116;
+      overflow: hidden;
+    }
+    .wire {
+      position: absolute;
+      top: 7.15rem;
+      height: 2px;
+      background: var(--line);
+    }
+    .wire.a { left: 18%; width: 24%; }
+    .wire.b { left: 46%; width: 32%; }
+    .wire.c { left: 34%; top: 11.6rem; width: 12%; transform: rotate(38deg); transform-origin: left center; }
+    .agent {
+      position: absolute;
+      width: 5.4rem;
+      text-align: center;
+    }
+    .face {
+      width: 5.4rem;
+      height: 5.4rem;
+      margin: 0 auto;
+      border: 3px solid var(--line);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 42%, var(--muted) 0 4px, transparent 5px),
+        radial-gradient(circle at 62% 42%, var(--muted) 0 4px, transparent 5px),
+        var(--card);
+    }
+    .face::after {
+      content: "";
+      display: block;
+      width: 1.1rem;
+      height: 2px;
+      margin: 2.55rem auto 0;
+      background: var(--muted);
+    }
+    .agent strong { display: block; margin-top: 0.45rem; font-size: 0.95rem; }
+    .agent span { color: var(--muted); font-size: 0.75rem; }
+    .delegate { left: 8%; top: 4.4rem; }
+    .provider { left: 40%; top: 4.4rem; }
+    .verifier { left: 76%; top: 4.4rem; }
+    .issuer { left: 27%; top: 12.4rem; width: 4.2rem; }
+    .issuer .face { width: 3.6rem; height: 3.6rem; }
+    .issuer .face::after { margin-top: 1.7rem; }
+    .packet, .gate {
+      position: absolute;
+      top: 5.55rem;
+      border-radius: 999px;
+      padding: 0.28rem 0.7rem;
+      font-size: 0.78rem;
+      background: #101418;
+    }
+    .packet { border: 2px solid var(--accent); color: var(--ink); }
+    .gate {
+      left: 62%;
+      top: 6.35rem;
+      width: 2.3rem;
+      height: 2.3rem;
+      padding: 0;
+      border: 3px solid var(--block);
+      border-radius: 50%;
+      color: var(--block);
+      text-align: center;
+      line-height: 1.9rem;
+      font-size: 1rem;
+      opacity: 0;
+    }
+    .forma {
+      margin-top: 0.8rem;
+      padding: 0.9rem 1rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+    .forma-row, .outcomes { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .forma-row { margin-top: 0.7rem; }
+    .outcomes { margin-top: 0.8rem; }
+    .chip, .outcome {
       border: 1px solid var(--line);
       border-radius: 12px;
       background: var(--card);
-      padding: 0.65rem 0.75rem;
-      margin: 0 0 0.5rem;
+      color: var(--muted);
+      padding: 0.45rem 0.75rem;
     }
-    .step strong, .decision strong { display: block; font-size: 0.92rem; }
-    .step span, .decision span, .note { display: block; margin-top: 0.2rem; color: var(--muted); font-size: 0.78rem; }
-    .note { margin: 0.4rem 0.15rem 0; }
-    .rail {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.55rem;
-      margin-top: 0.8rem;
-      padding: 0.75rem;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-    }
-    .rail p { grid-column: 1 / -1; margin: 0 0 0.15rem; color: var(--muted); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
-    .rail span { margin: 0; font-size: 0.84rem; }
-    nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.2rem; }
+    .caption { min-height: 1.2rem; margin: 0.85rem 0 0; color: var(--muted); font-size: 0.92rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.1rem; }
     nav a { color: var(--accent); font-size: 0.9rem; }
     @media (prefers-reduced-motion: no-preference) {
-      .panel, .step, .decision, .rail span { animation: dim 14.4s linear infinite; }
-      .a { animation-name: glow; animation-delay: 0s; }
-      .a1 { animation-delay: 0s; }
-      .a2 { animation-delay: 1.2s; }
-      .a3 { animation-delay: 2.4s; }
-      .b { animation-delay: 3.6s; }
-      .b1 { animation-delay: 3.6s; }
-      .b2 { animation-delay: 4.8s; }
-      .b3 { animation-delay: 6s; }
-      .b4 { animation-delay: 7.2s; }
-      .form { animation-delay: 8.2s; }
-      .c { animation-delay: 9.2s; }
-      .c1 { animation-delay: 9.2s; }
-      .c2 { animation-delay: 10.2s; }
-      .c3 { animation-delay: 11.2s; }
-      .c4 { animation-delay: 12.2s; }
-      .r1 { animation-delay: 1s; }
-      .r2 { animation-delay: 4s; }
-      .r3 { animation-delay: 7s; }
-      .r4 { animation-delay: 10s; }
+      .packet { animation: travel 12s linear infinite; }
+      .gate { animation: gate 12s linear infinite; }
+      .delegate .face { animation: glow 12s linear infinite; }
+      .provider .face { animation: glow 12s linear infinite; animation-delay: -9s; }
+      .verifier .face { animation: glow 12s linear infinite; animation-delay: -5s; }
+      .issuer .face { animation: glow 12s linear infinite; animation-delay: -8s; }
+      .policy { animation: lit 12s linear infinite; animation-delay: -6.2s; }
+      .use { animation: lit 12s linear infinite; animation-delay: -5.6s; }
+      .evaluation { animation: lit 12s linear infinite; animation-delay: -4.6s; }
+      .check { animation: lit 12s linear infinite; animation-delay: -4s; }
+      .accept { animation: accept 12s linear infinite; }
+      .block { animation: blocked 12s linear infinite; }
+      .caption { animation: words 12s linear infinite; }
+    }
+    @keyframes travel {
+      0% { left: 16%; opacity: 1; }
+      22% { left: 38%; opacity: 1; }
+      28% { left: 44%; opacity: 0; }
+      32% { left: 48%; opacity: 1; }
+      48% { left: 60%; opacity: 1; }
+      62% { left: 58%; opacity: 1; }
+      70% { opacity: 0; }
+      74% { left: 50%; opacity: 1; }
+      88% { left: 72%; opacity: 1; }
+      100% { left: 74%; opacity: 1; }
+    }
+    @keyframes gate {
+      0%, 52% { opacity: 0; }
+      58%, 68% { opacity: 1; }
+      74%, 100% { opacity: 0; }
     }
     @keyframes glow {
-      0%, 8% { border-color: var(--accent); box-shadow: inset 0 0 0 1px rgba(110, 231, 212, 0.25); }
-      14%, 100% { border-color: var(--line); box-shadow: none; }
+      0%, 18% { border-color: var(--accent); box-shadow: 0 0 0 6px rgba(110, 231, 212, 0.12); }
+      28%, 100% { border-color: var(--line); box-shadow: none; }
     }
-    @keyframes dim {
-      0%, 8% { border-color: var(--accent); }
-      14%, 100% { border-color: var(--line); }
+    @keyframes lit {
+      0%, 12% { border-color: var(--accent); color: var(--ink); }
+      40%, 100% { border-color: var(--line); color: var(--muted); }
     }
-    @media (max-width: 860px) {
-      .board, .rail { grid-template-columns: 1fr; }
+    @keyframes blocked {
+      0%, 54% { border-color: var(--line); color: var(--muted); }
+      60%, 70% { border-color: var(--block); color: var(--block); }
+      76%, 100% { border-color: var(--line); color: var(--muted); }
+    }
+    @keyframes accept {
+      0%, 82% { border-color: var(--line); color: var(--muted); }
+      88%, 100% { border-color: var(--ok); color: var(--ok); }
+    }
+    @keyframes words {
+      0%, 24% { content: "Delegate sends the task to the provider."; }
+    }
+    .caption::before { content: "Delegate sends the task. The provider returns evidence. FORMA blocks one path, then accepts a reassessed copy."; }
+    @media (max-width: 720px) {
+      .stage { height: 26rem; }
+      .verifier { left: 70%; }
+      .wire.b { width: 24%; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .b, .form, .c4, .r4 { border-color: var(--accent); }
+      .accept { border-color: var(--ok); color: var(--ok); }
+      .verifier .face { border-color: var(--accent); }
     }
   </style>
 </head>
@@ -97,39 +191,33 @@
     <header>
       <p>Replication package</p>
       <h1>FORMA</h1>
-      <p class="lede">Architectural inputs enter one classifier. Formation is a separate policy. A tactic is an explicit copy, reassessed and compared with the baseline.</p>
+      <p class="lede">Agents pass a task and an evidence item. FORMA reads that exchange, blocks the path when the result does not hold, and accepts it when the result is checkable and holds.</p>
     </header>
-    <section class="board" aria-label="FORMA workflow">
-      <article class="panel a">
-        <h2>A · Architectural inputs</h2>
-        <div class="step a1"><strong>1 · Verification context C</strong><span>Delegate to provider. Designated verifier v.</span></div>
-        <div class="step a2"><strong>2 · Constraint φ</strong><span>Predicate, required attributes, accepted strengths.</span></div>
-        <div class="step a3"><strong>3 · Evidence configuration E</strong><span>Visibility, form, and issuer.</span></div>
-        <p class="note">Available evidence reaches the verifier. The oracle is not an input.</p>
-      </article>
-      <article class="panel b">
-        <h2>B · Verification and formation</h2>
-        <div class="step b1"><strong>1 · Validate policy</strong><span>Ownership and evidence form.</span></div>
-        <div class="step b2"><strong>2 · Evidence usability</strong><span>Permitted witness and accepted strength.</span></div>
-        <div class="step b3"><strong>3 · Constraint evaluation</strong><span>holds, violated, or unavailable.</span></div>
-        <div class="step b4"><strong>4 · Checkability</strong><span>Feasibility and the attributes read.</span></div>
-        <div class="decision form"><strong>Formation policy</strong><span>Checkable and holds leads to Accept. Otherwise Block. Escalation preconditions lead to Defer.</span></div>
-      </article>
-      <article class="panel c">
-        <h2>C · Tactic assessment</h2>
-        <div class="step c1"><strong>1 · Check applicability</strong><span>An explicit caller invokes the tactic.</span></div>
-        <div class="step c2"><strong>2 · Transform a copy</strong><span>Selective disclosure, trusted attestation, or public certification.</span></div>
-        <div class="step c3"><strong>3 · Reassess alternative</strong><span>The same classifier and formation policy as B.</span></div>
-        <div class="step c4"><strong>4 · Compare results</strong><span>Checkability, evaluation, formation, disclosure, and issuer reliance.</span></div>
-        <p class="note">The constraint formula is retained.</p>
-      </article>
+    <section class="stage" aria-label="Agents exchanging evidence">
+      <div class="wire a"></div>
+      <div class="wire b"></div>
+      <div class="wire c"></div>
+      <div class="agent delegate"><div class="face"></div><strong>Delegate</strong><span>sends the task</span></div>
+      <div class="agent provider"><div class="face"></div><strong>Provider</strong><span>returns evidence</span></div>
+      <div class="agent verifier"><div class="face"></div><strong>Verifier</strong><span>issues the receipt</span></div>
+      <div class="agent issuer"><div class="face"></div><strong>Issuer</strong><span>evidence item</span></div>
+      <div class="packet">message</div>
+      <div class="gate" aria-hidden="true">/</div>
     </section>
-    <section class="rail" aria-label="A2A realisation">
-      <p>A2A realisation</p>
-      <span class="r1">Model selects the action</span>
-      <span class="r2">Runtime validates it</span>
-      <span class="r3">Agents exchange evidence</span>
-      <span class="r4">Verifier issues the receipt</span>
+    <p class="caption"></p>
+    <section class="forma" aria-label="FORMA formation">
+      <strong>FORMA</strong>
+      <div class="forma-row">
+        <span class="chip policy">Policy</span>
+        <span class="chip use">Usability</span>
+        <span class="chip evaluation">Evaluation</span>
+        <span class="chip check">Checkability</span>
+      </div>
+      <div class="outcomes">
+        <span class="outcome accept">Accept</span>
+        <span class="outcome block">Block</span>
+        <span class="outcome">Defer</span>
+      </div>
     </section>
     <nav>
       <a href="https://github.com/ResearchAnonymized/FORMA/blob/main/BENCHMARK.md">Use FORMA-Bench</a>

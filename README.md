@@ -2,9 +2,9 @@
 
 Architectural verifiability for agent-to-agent systems.
 
-![FORMA workflow. Architectural inputs, then verification and formation, then an explicit tactic reassessment. Along the bottom, the model selects an action, the runtime validates it, the agents exchange evidence, and the verifier issues a receipt.](docs/forma-exchange.gif)
+![Four agent icons. The delegate sends a task to the provider, the provider returns evidence toward the verifier, FORMA blocks that path, then a transformed copy is accepted and the verifier receives a receipt.](docs/forma-exchange.gif)
 
-The loop follows the workflow figure. Architectural inputs are the verification context, the constraint, and the evidence configuration. The classifier then validates policy, checks usability, evaluates the constraint, and assigns checkability. Formation is separate: accept when the result is checkable and holds, block otherwise, and defer only when escalation preconditions hold. A tactic is invoked explicitly, applied to a copy, and compared with that baseline.
+The delegate sends a task. The provider returns evidence from an issuer. FORMA checks policy, usability, evaluation, and checkability. The formation policy blocks the path unless the result is checkable and holds. A tactic sends a transformed copy through the same classifier, and the verifier issues a receipt when that copy is accepted.
 
 The same sequence plays on the [welcome page](https://researchanonymized.github.io/FORMA/). This repository holds the implementation, FORMA-Bench, and the retained evaluation records.
 
